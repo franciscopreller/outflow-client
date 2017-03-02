@@ -62,8 +62,32 @@ new Vue({
         });
       });
     },
-    addContent({ uuid, text }) {
-      this.$emit(`server.output.${uuid}`, text);
+    getLineFragment(fragment) {
+      let styles = `color: ${fragment.codes.foreground}; background: ${fragment.codes.background}; `;
+      fragment.codes.types.forEach((t) => {
+        switch (t) {
+          case 'bold':
+            styles += 'font-weight: bold; ';
+            break;
+          case 'italic':
+            styles += 'text-decoration: italic; ';
+            break;
+          case 'underline':
+            styles += 'text-decoration: underline; ';
+            break;
+          default:
+            break;
+        }
+      });
+      console.log(fragment.text.replace(/ /g, '\u00a0'));
+      return `<span style="${styles}">${fragment.text.replace(/ /g, '\u00a0')}</span>`;
+    },
+    addContent({ uuid, lines }) {
+      lines.forEach((line) => {
+        line.forEach((fragment) => {
+          this.$emit(`server.output.${uuid}`, `<div style="height: 16px;">${this.getLineFragment(fragment)}</div>`);
+        });
+      });
     },
     sendCommand({ uuid, command }) {
       this.socket.emit(`server.command.${uuid}`, { command });
