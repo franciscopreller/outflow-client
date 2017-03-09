@@ -79,14 +79,24 @@ new Vue({
             break;
         }
       });
-      console.log(fragment.text.replace(/ /g, '\u00a0'));
-      return `<span style="${styles}">${fragment.text.replace(/ /g, '\u00a0')}</span>`;
+      // Replace all whitespaces with non breaking spaces then inject it into span
+      return `<span style="${styles}">${this.escapeForHtml({ str: fragment.text })}</span>`;
+    },
+    escapeForHtml({ str }) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/ /g, '\u00a0');
     },
     addContent({ uuid, lines }) {
       lines.forEach((line) => {
-        line.forEach((fragment) => {
-          this.$emit(`server.output.${uuid}`, `<div style="height: 16px;">${this.getLineFragment(fragment)}</div>`);
-        });
+        const lineStr = line.map(fragment => this.getLineFragment(fragment)).join('');
+        this.$emit(
+          `server.output.${uuid}`,
+          `<div style="height: 16px;">${lineStr}</div>`,
+          );
       });
     },
     sendCommand({ uuid, command }) {
