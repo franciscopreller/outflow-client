@@ -115,7 +115,6 @@ new Vue({
 
     // Bind listeners on $root
     this.$on('server.command', ({ uuid, command }) => {
-      console.log(`Sending "${command}" command to connection`, this.connections[uuid]);
       this.sendCommand({ uuid, command });
     });
     this.$on('server.connect', ({ connection, uuid }) => {
@@ -123,6 +122,9 @@ new Vue({
       if (this.socketConnected) {
         this.connectByUuid(uuid);
       }
+    });
+    this.$on('connections.add', ({ conn }) => {
+      this.$emit('connection.added', { conn });
     });
   },
 });

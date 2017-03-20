@@ -20,8 +20,7 @@ export default {
     return {
       mainTitle: 'OutFlow BETA',
       connections: [
-        { name: 'Threshold RPG', host: 'thresholdrpg.com', port: 23 },
-        { name: 'Minstrel Hall', host: 'minstrelhall.com', port: 221 },
+        // { name: 'Threshold RPG', host: 'thresholdrpg.com', port: 23 },
       ],
     };
   },
@@ -35,6 +34,12 @@ export default {
   mounted() {
     window.onresize = () => this.bindWindowSize();
     this.bindWindowSize();
+  },
+  created() {
+    this.$root.$on('connection.added', ({ conn }) => {
+      console.log('Got new connection', conn);
+      this.connections.push(conn);
+    });
   },
 };
 </script>

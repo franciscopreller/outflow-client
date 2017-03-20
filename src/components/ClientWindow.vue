@@ -63,6 +63,10 @@ export default {
       this.content += `<span style="color: yellow">${command}</span><br>`;
       this.scrollToBottom();
     },
+    addSystemMessage(command) {
+      this.content += `<span style="color: teal">%%% ${command}</span><br>`;
+      this.scrollToBottom();
+    },
     scrollToBottom() {
       setTimeout(() => {
         const el = this.$el.querySelector('.client-window');
