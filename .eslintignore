@@ -1,2 +1,5 @@
-build/*.js
-config/*.js
+blueprints/**/files/**
+coverage/**
+node_modules/**
+dist/**
+src/index.html
