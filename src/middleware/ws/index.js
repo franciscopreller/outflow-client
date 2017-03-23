@@ -1,15 +1,15 @@
 export function bindWSEvents(ws, dispatch) {
-  ws.on('open', () => dispatch({
-    type: 'WS_OPEN'
+  ws.on('connect', () => dispatch({
+    type: 'WS_CONNECTED',
   }));
   ws.on('error', (error) => dispatch({
     type: 'WS_ERROR',
     payload: {
-      error
+      error,
     },
   }));
-  ws.on('close', (code, reason) => dispatch({
-    type: 'WS_CLOSE',
+  ws.on('disconnect', (code, reason) => dispatch({
+    type: 'WS_DISCONNECT',
     payload: {
       code,
       reason,

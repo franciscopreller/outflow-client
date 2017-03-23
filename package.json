@@ -109,10 +109,10 @@
     "redux-thunk": "^2.0.0",
     "rimraf": "^2.5.4",
     "sass-loader": "^4.0.0",
+    "socketcluster-client": "^5.3.0",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.14",
-    "ws": "^2.2.1",
     "yargs": "^6.3.0"
   },
   "devDependencies": {

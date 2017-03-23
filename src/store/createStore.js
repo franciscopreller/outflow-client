@@ -3,15 +3,23 @@ import thunk from 'redux-thunk';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { browserHistory } from 'react-router';
 import makeRootReducer from './reducers';
-import WebSocket from 'ws';
+import WebSocket from 'socketcluster-client';
 import { updateLocation } from './location';
 import createWSMiddleware from '../middleware/ws';
 
 export default (initialState = {}) => {
-  const ws = new WebSocket('ws://outflow.local/ws');
+  const ws = WebSocket.connect({
+    hostname: 'outflow.local',
+    port: 80,
+    path: '/ws',
+    autoreconnect: true,
+  });
   const wsMiddleware = createWSMiddleware(ws, '@@ws');
-  ws.on('open', function open() {
-    ws.send('something');
+  ws.on('connect', () => {
+    console.log('Connected to server');
+  });
+  ws.on('error', (err) => {
+    console.log('Error connecting to socket server', err);
   });
 
   // Middleware Configuration
