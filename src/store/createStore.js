@@ -8,19 +8,15 @@ import { updateLocation } from './location';
 import createWSMiddleware from '../middleware/ws';
 
 export default (initialState = {}) => {
+  // Initialise socket connection and middleware
   const ws = WebSocket.connect({
     hostname: 'outflow.local',
     port: 80,
     path: '/ws',
     autoreconnect: true,
+    perMessageDeflate: true,
   });
   const wsMiddleware = createWSMiddleware(ws, '@@ws');
-  ws.on('connect', () => {
-    console.log('Connected to server');
-  });
-  ws.on('error', (err) => {
-    console.log('Error connecting to socket server', err);
-  });
 
   // Middleware Configuration
   const middleware = [thunk, wsMiddleware];
