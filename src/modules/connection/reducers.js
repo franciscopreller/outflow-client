@@ -1,4 +1,4 @@
-import { ADD_CONNECTION, REMOVE_CONNECTION } from './constants';
+import { ADD_CONNECTION, REMOVE_CONNECTION, OPEN_CONNECTION } from './constants';
 
 // Initial State
 const initialState = {
@@ -13,10 +13,18 @@ const ACTION_HANDLERS = {
       Object.assign({}, action.payload.connection),
     ],
   }),
+  [OPEN_CONNECTION]: (state, action) => Object.assign({}, state, {
+    connections: state.connections.map((connection, index) =>
+      (index !== action.payload.index) ?
+        connection :
+        Object.assign({}, connection, {
+          uuid: action.payload.uuid
+        })
+    ),
+  }),
   [REMOVE_CONNECTION]: (state, action) => Object.assign({}, state, {
     connections: [
-      ...state.connections.slice(0, action.payload.index),
-      ...state.connections.slice(action.payload.index + 1),
+      ...state.connections.filter((connection) => connection.uuid !== action.payload.connection.uuid),
     ],
   }),
 };

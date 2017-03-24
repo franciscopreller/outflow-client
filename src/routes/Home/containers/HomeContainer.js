@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import Home from '../components/HomeView';
-import { removeConnection } from '../../../modules/connection/actions';
+import { closeConnection } from '../../../modules/connection/actions';
 
 const mapDispatchToProps = {
-  removeConnection
+  closeConnection
 };
 
 const mapStateToProps = (state) => ({

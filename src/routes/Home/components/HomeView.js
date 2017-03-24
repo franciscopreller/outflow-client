@@ -15,11 +15,11 @@ const tabLabel = (title, index, closeAction) => (
   </div>
 );
 
-export const HomeView = ({ connections, removeConnection }) => (
+export const HomeView = ({ connections, closeConnection }) => (
   <div>
     <Tabs>
       {connections.map((conn, index) => (
-        <Tab key={`tab__${index}`} label={tabLabel(conn.name, index, removeConnection)}>
+        <Tab key={`tab__${index}`} label={tabLabel(conn.name, index, closeConnection)}>
           <span>{conn.host}:{conn.port}</span>
         </Tab>
       ))}

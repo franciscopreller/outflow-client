@@ -4975,10 +4975,6 @@ redux-saga@^0.14.3:
   version "0.14.3"
   resolved "http://build.flamingo.io:4873/redux-saga/-/redux-saga-0.14.3.tgz#28cd2c5b49cf780a1de25875765724150c630513"
 
-redux-thunk@^2.0.0:
-  version "2.2.0"
-  resolved "http://build.flamingo.io:4873/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
-
 redux@^3.6.0:
   version "3.6.0"
   resolved "http://build.flamingo.io:4873/redux/-/redux-3.6.0.tgz#887c2b3d0b9bd86eca2be70571c27654c19e188d"
@@ -5949,7 +5945,7 @@ uuid@^2.0.1, uuid@^2.0.3:
   version "2.0.3"
   resolved "http://build.flamingo.io:4873/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
 
-uuid@^3.0.0:
+uuid@^3.0.0, uuid@^3.0.1:
   version "3.0.1"
   resolved "http://build.flamingo.io:4873/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
 

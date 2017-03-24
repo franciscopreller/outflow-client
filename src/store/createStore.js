@@ -1,11 +1,12 @@
 import { applyMiddleware, compose, createStore } from 'redux';
-import thunk from 'redux-thunk';
 import { persistStore, autoRehydrate } from 'redux-persist';
+import createSagaMiddleware from 'redux-saga';
 import { browserHistory } from 'react-router';
 import makeRootReducer from './reducers';
 import WebSocket from 'socketcluster-client';
 import { updateLocation } from './location';
 import createWSMiddleware from '../middleware/ws';
+import rootSaga from './sagas';
 
 export default (initialState = {}) => {
   // Initialise socket connection and middleware
@@ -17,9 +18,10 @@ export default (initialState = {}) => {
     perMessageDeflate: true,
   });
   const wsMiddleware = createWSMiddleware(ws, '@@ws');
+  const sagaMiddleware = createSagaMiddleware();
 
   // Middleware Configuration
-  const middleware = [thunk, wsMiddleware];
+  const middleware = [wsMiddleware, sagaMiddleware];
 
   // Store Enhancers
   const enhancers = [autoRehydrate()];
@@ -44,6 +46,7 @@ export default (initialState = {}) => {
   );
   persistStore(store);
   store.asyncReducers = {};
+  sagaMiddleware.run(rootSaga);
 
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   store.unsubscribeHistory = browserHistory.listen(updateLocation(store));
