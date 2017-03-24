@@ -1,20 +1,10 @@
+import * as actions from './actions';
+import { WS_MESSAGE } from './constants';
+
 export function bindWSEvents(ws, dispatch) {
-  ws.on('connect', () => dispatch({
-    type: 'WS_CONNECTED',
-  }));
-  ws.on('error', (error) => dispatch({
-    type: 'WS_ERROR',
-    payload: {
-      error,
-    },
-  }));
-  ws.on('disconnect', (code, reason) => dispatch({
-    type: 'WS_DISCONNECT',
-    payload: {
-      code,
-      reason,
-    },
-  }));
+  ws.on('connect', () => dispatch(actions.connected()));
+  ws.on('error', (error) => dispatch(actions.error(error)));
+  ws.on('disconnect', (code) => dispatch(actions.disconnected(code)));
 }
 
 /**
@@ -26,7 +16,7 @@ export function bindWSEvents(ws, dispatch) {
  * @returns {function({dispatch: *, getState: *})}
  */
 export default function createWSMiddleware(ws, option) {
-  const send = ws.send.bind(ws);
+  const send = ws.emit.bind(ws);
   return ({ dispatch, getState }) => {
     // Bind socket events
     bindWSEvents(ws, dispatch);
@@ -40,7 +30,8 @@ export default function createWSMiddleware(ws, option) {
       if (actionCopy.type.split('/').shift().indexOf(option) !== 0) {
         next(actionCopy);
       } else {
-        send(actionCopy);
+        next(actionCopy);
+        send(WS_MESSAGE, actionCopy);
       }
     };
   };

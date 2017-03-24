@@ -15,11 +15,9 @@ const ACTION_HANDLERS = {
   }),
   [OPEN_CONNECTION]: (state, action) => Object.assign({}, state, {
     connections: state.connections.map((connection, index) =>
-      (index !== action.payload.index) ?
-        connection :
-        Object.assign({}, connection, {
-          uuid: action.payload.uuid
-        })
+      (index !== action.payload.index) ? connection : Object.assign({}, connection, {
+        uuid: action.payload.uuid
+      })
     ),
   }),
   [REMOVE_CONNECTION]: (state, action) => Object.assign({}, state, {

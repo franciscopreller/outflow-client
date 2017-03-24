@@ -2,10 +2,11 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import { browserHistory } from 'react-router';
-import makeRootReducer from './reducers';
 import WebSocket from 'socketcluster-client';
+import makeRootReducer from './reducers';
 import { updateLocation } from './location';
 import createWSMiddleware from '../middleware/ws';
+import { WS_PREFIX } from '../middleware/ws/constants';
 import rootSaga from './sagas';
 
 export default (initialState = {}) => {
@@ -17,7 +18,7 @@ export default (initialState = {}) => {
     autoreconnect: true,
     perMessageDeflate: true,
   });
-  const wsMiddleware = createWSMiddleware(ws, '@@ws');
+  const wsMiddleware = createWSMiddleware(ws, WS_PREFIX);
   const sagaMiddleware = createSagaMiddleware();
 
   // Middleware Configuration
