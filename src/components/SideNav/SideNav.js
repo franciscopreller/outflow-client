@@ -1,12 +1,11 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import Dialog from 'material-ui/Dialog';
 import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
 import AddConnectionIcon from 'material-ui/svg-icons/content/add-circle';
 import PreferencesIcon from 'material-ui/svg-icons/action/settings';
 import {addConnection} from '../../routes/Home/modules/connection';
+import AddConnectionDialog from './AddConnectionDialog';
 
 export class SideNav extends React.Component {
   static contextTypes = {
@@ -21,6 +20,7 @@ export class SideNav extends React.Component {
       addConnectionDialogOpen: false,
     };
     this.handleRequestChange = this.handleRequestChange.bind(this);
+    this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);
     this.handleAddNewConnection = this.handleAddNewConnection.bind(this);
   }
@@ -44,12 +44,15 @@ export class SideNav extends React.Component {
     });
   }
 
-  handleAddNewConnection() {
-    this.context.store.dispatch(addConnection({
-      host: 'thresholdrpg.com',
-      port: 23,
-      name: 'Threshold RPG'
-    }));
+  handleOpenDialog() {
+    this.setState({
+      open: false,
+      addConnectionDialogOpen: true,
+    });
+  }
+
+  handleAddNewConnection({ host, port, name }) {
+    this.context.store.dispatch(addConnection({ host, port, name }));
 
     // Close the dialog
     this.handleCloseDialog();
@@ -59,40 +62,21 @@ export class SideNav extends React.Component {
     const navigationItems = [{
       primaryText: 'New Connection',
       leftIcon: <AddConnectionIcon />,
-      onTouchTap: () => {
-        this.setState({
-          open: false,
-          addConnectionDialogOpen: true,
-        });
-      },
+      onTouchTap: this.handleOpenDialog,
     }, {
       primaryText: 'Preferences',
       leftIcon: <PreferencesIcon />,
       onTouchTap: () => alert('clicked preferences'),
     }];
 
-    const dialogActions = [
-      <FlatButton
-        label="Cancel"
-        primary={false}
-        onTouchTap={this.handleCloseDialog}
-      />,
-      <FlatButton
-        label="Add Connection"
-        primary={true}
-        onTouchTap={this.handleAddNewConnection}
-      />,
-    ];
-
     return (
       <div>
-        <Dialog
-          title="Add a new Connection"
-          actions={dialogActions}
-          modal={true}
+        <AddConnectionDialog
+          handleCloseDialog={this.handleCloseDialog}
+          handleOpenDialog={this.handleOpenDialog}
+          handleAddNewConnection={this.handleAddNewConnection}
           open={this.state.addConnectionDialogOpen}
-          onRequestClose={this.handleCloseDialog}>
-        </Dialog>
+        />
         <Drawer
           open={this.state.open}
           docked={false}

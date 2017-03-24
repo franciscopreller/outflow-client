@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import Home from '../components/HomeView';
+import { removeConnection } from '../modules/connection';
 
-// const mapDispatchToProps = {
-//   increment : () => increment(1),
-//   doubleAsync
-// };
+const mapDispatchToProps = {
+  removeConnection
+};
 
 const mapStateToProps = (state) => ({
   connections: state.connection.connections
 });
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

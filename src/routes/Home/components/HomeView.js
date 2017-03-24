@@ -1,17 +1,28 @@
 import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import './HomeView.scss';
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import { indigo500 } from 'material-ui/styles/colors';
 
-export const HomeView = ({ connections }) => (
+const tabLabel = (title, index, closeAction) => (
+  <div>
+    <span style={{float: 'left'}}>{title}</span>
+    <CloseIcon
+      color="white"
+      hoverColor={indigo500}
+      style={{float: 'right', height: '16px', width: '16px', marginLeft: '10px'}}
+      onTouchTap={() => closeAction(index)}
+    />
+  </div>
+);
+
+export const HomeView = ({ connections, removeConnection }) => (
   <div>
     <Tabs>
-      {connections.map(conn => {
-        return (
-          <Tab label={conn.name} style={{maxWidth: '200px'}}>
-            <span>{conn.host}:{conn.port}</span>
-          </Tab>
-        );
-      })}
+      {connections.map((conn, index) => (
+        <Tab key={`tab__${index}`} label={tabLabel(conn.name, index, removeConnection)}>
+          <span>{conn.host}:{conn.port}</span>
+        </Tab>
+      ))}
     </Tabs>
   </div>
 );
