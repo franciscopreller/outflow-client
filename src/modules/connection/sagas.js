@@ -9,28 +9,27 @@ function* addConnectionSession(action) {
     const index = yield select((state) => state.connection.sessions.length - 1);
     const uuid = UUID();
     yield put(actions.openSession(index, uuid));
-    yield console.log(`Connection added at index ${index}`, connection);
   } catch (err) {
-    yield console.log('Could not add connection', err);
+    yield console.error('Could not add connection', err);
   }
 }
 
 function* openConnectionSession(action) {
   try {
     const connection = yield select((state) => state.connection.sessions[action.payload.index]);
+    yield put(actions.openConnection(connection));
     yield console.log('Opening connection', connection);
   } catch (err) {
-    yield console.log('Could not open connection', err);
+    yield console.error('Could not open connection', err);
   }
 }
 
 function* closeConnectionSession(action) {
   try {
     const connection = yield select((state) => state.connection.sessions[action.payload.index]);
-    yield console.log('Closing connection', connection);
     yield put(actions.removeSession(connection));
   } catch (err) {
-    yield console.log('Could not close connection', err);
+    yield console.error('Could not close connection', err);
   }
 }
 
@@ -39,7 +38,7 @@ function* removeConnectionSession(action) {
     const connection = action.payload.connection;
     yield console.log('Connection removed', connection);
   } catch (err) {
-    yield console.log('Could not open connection', err);
+    yield console.error('Could not open connection', err);
   }
 }
 

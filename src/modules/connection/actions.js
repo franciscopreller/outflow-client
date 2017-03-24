@@ -1,4 +1,10 @@
-import { ADD_SESSION, IDENTIFY_SESSION, REMOVE_SESSION, CLOSE_SESSION } from './constants';
+import {
+  ADD_SESSION,
+  IDENTIFY_SESSION,
+  REMOVE_SESSION,
+  CLOSE_SESSION,
+  OPEN_CONNECTION,
+} from './constants';
 
 export function addSession(connection) {
   return {
@@ -35,4 +41,13 @@ export function removeSession(connection) {
       connection,
     },
   };
+}
+
+export function openConnection(connection) {
+  return {
+    type: OPEN_CONNECTION,
+    payload: {
+      connection,
+    }
+  }
 }

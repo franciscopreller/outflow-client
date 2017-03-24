@@ -1,5 +1,4 @@
 import * as actions from './actions';
-import { WS_MESSAGE } from './constants';
 
 export function bindWSEvents(ws, dispatch) {
   ws.on('connect', () => dispatch(actions.connected()));
@@ -31,7 +30,13 @@ export default function createWSMiddleware(ws, option) {
         next(actionCopy);
       } else {
         next(actionCopy);
-        send(WS_MESSAGE, actionCopy);
+        const event = actionCopy.type.split('/')[1];
+        const payload = actionCopy.payload;
+
+        // Send event to socket server
+        send(event, {
+          payload,
+        });
       }
     };
   };
