@@ -1,26 +1,11 @@
-// Constants
-export const ADD_CONNECTION = 'ADD_CONNECTION';
-export const REMOVE_CONNECTION = 'REMOVE_CONNECTION';
+import { ADD_CONNECTION, REMOVE_CONNECTION } from './constants';
 
-// Actions
-export function addConnection(connection) {
-  return {
-    type: ADD_CONNECTION,
-    payload: {
-      connection,
-    },
-  };
-}
-export function removeConnection(index) {
-  return {
-    type: REMOVE_CONNECTION,
-    payload: {
-      index,
-    },
-  };
-}
+// Initial State
+const initialState = {
+  connections: [],
+};
 
-// Action Handlers
+// Handlers
 const ACTION_HANDLERS = {
   [ADD_CONNECTION]: (state, action) => Object.assign({}, state, {
     connections: [
@@ -36,10 +21,7 @@ const ACTION_HANDLERS = {
   }),
 };
 
-// Reducer
-const initialState = {
-  connections: [],
-};
+// Expose reducer
 export default function connectionReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
 

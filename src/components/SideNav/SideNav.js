@@ -4,7 +4,7 @@ import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
 import AddConnectionIcon from 'material-ui/svg-icons/content/add-circle';
 import PreferencesIcon from 'material-ui/svg-icons/action/settings';
-import {addConnection} from '../../routes/Home/modules/connection';
+import { addConnection } from '../../modules/connection/actions';
 import AddConnectionDialog from './AddConnectionDialog';
 
 export class SideNav extends React.Component {
