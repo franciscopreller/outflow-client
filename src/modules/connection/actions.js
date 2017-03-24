@@ -1,17 +1,17 @@
-import { ADD_CONNECTION, OPEN_CONNECTION, REMOVE_CONNECTION, CLOSE_CONNECTION } from './constants';
+import { ADD_SESSION, IDENTIFY_SESSION, REMOVE_SESSION, CLOSE_SESSION } from './constants';
 
-export function addConnection(connection) {
+export function addSession(connection) {
   return {
-    type: ADD_CONNECTION,
+    type: ADD_SESSION,
     payload: {
       connection,
     },
   };
 }
 
-export function openConnection(index, uuid) {
+export function openSession(index, uuid) {
   return {
-    type: OPEN_CONNECTION,
+    type: IDENTIFY_SESSION,
     payload: {
       index,
       uuid,
@@ -19,18 +19,18 @@ export function openConnection(index, uuid) {
   };
 }
 
-export function closeConnection(index) {
+export function closeSession(index) {
   return {
-    type: CLOSE_CONNECTION,
+    type: CLOSE_SESSION,
     payload: {
       index,
     },
   };
 }
 
-export function removeConnection(connection) {
+export function removeSession(connection) {
   return {
-    type: REMOVE_CONNECTION,
+    type: REMOVE_SESSION,
     payload: {
       connection,
     },

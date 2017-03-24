@@ -1,13 +1,13 @@
 import { connect } from 'react-redux';
 import Home from '../components/HomeView';
-import { closeConnection } from '../../../modules/connection/actions';
+import { closeSession } from '../../../modules/connection/actions';
 
 const mapDispatchToProps = {
-  closeConnection
+  closeSession
 };
 
 const mapStateToProps = (state) => ({
-  connections: state.connection.connections
+  sessions: state.connection.sessions
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

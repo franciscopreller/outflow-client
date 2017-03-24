@@ -1,28 +1,28 @@
-import { ADD_CONNECTION, REMOVE_CONNECTION, OPEN_CONNECTION } from './constants';
+import { ADD_SESSION, REMOVE_SESSION, IDENTIFY_SESSION } from './constants';
 
 // Initial State
 const initialState = {
-  connections: [],
+  sessions: [],
 };
 
 // Handlers
 const ACTION_HANDLERS = {
-  [ADD_CONNECTION]: (state, action) => Object.assign({}, state, {
-    connections: [
-      ...state.connections,
+  [ADD_SESSION]     : (state, action) => Object.assign({}, state, {
+    sessions: [
+      ...state.sessions,
       Object.assign({}, action.payload.connection),
     ],
   }),
-  [OPEN_CONNECTION]: (state, action) => Object.assign({}, state, {
-    connections: state.connections.map((connection, index) =>
+  [IDENTIFY_SESSION]: (state, action) => Object.assign({}, state, {
+    sessions: state.sessions.map((connection, index) =>
       (index !== action.payload.index) ? connection : Object.assign({}, connection, {
         uuid: action.payload.uuid
       })
     ),
   }),
-  [REMOVE_CONNECTION]: (state, action) => Object.assign({}, state, {
-    connections: [
-      ...state.connections.filter((connection) => connection.uuid !== action.payload.connection.uuid),
+  [REMOVE_SESSION]  : (state, action) => Object.assign({}, state, {
+    sessions: [
+      ...state.sessions.filter((connection) => connection.uuid !== action.payload.connection.uuid),
     ],
   }),
 };
