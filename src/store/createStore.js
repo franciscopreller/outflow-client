@@ -2,7 +2,6 @@ import { applyMiddleware, compose, createStore } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import { browserHistory } from 'react-router';
-import WebSocket from 'socketcluster-client';
 import makeRootReducer from './reducers';
 import { updateLocation } from './location';
 import createWSMiddleware from '../middleware/ws';
@@ -10,15 +9,13 @@ import { WS_PREFIX } from '../middleware/ws/constants';
 import rootSaga from './sagas';
 
 export default (initialState = {}) => {
-  // Initialise socket connection and middleware
-  const ws = WebSocket.connect({
+  const wsMiddleware = createWSMiddleware(WS_PREFIX, {
     hostname: 'outflow.local',
     port: 80,
     path: '/ws',
     autoreconnect: true,
     perMessageDeflate: true,
   });
-  const wsMiddleware = createWSMiddleware(ws, WS_PREFIX);
   const sagaMiddleware = createSagaMiddleware();
 
   // Middleware Configuration

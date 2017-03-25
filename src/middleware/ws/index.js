@@ -1,3 +1,4 @@
+import WebSocket from 'socketcluster-client';
 import * as actions from './actions';
 
 export function bindWSEvents(ws, dispatch) {
@@ -9,12 +10,13 @@ export function bindWSEvents(ws, dispatch) {
 /**
  * Allows you to register actions that when dispatched, are sent to webSocket server
  *
- * @param ws        connected instance of ws module
- * @param option    may be an array of action types, a test function, or a string prefix
+ * @param prefix  connected instance of ws module
+ * @param options may be an array of action types, a test function, or a string prefix
  *
  * @returns {function({dispatch: *, getState: *})}
  */
-export default function createWSMiddleware(ws, option) {
+export default function createWSMiddleware(prefix, options) {
+  const ws = WebSocket.connect(options);
   const send = ws.emit.bind(ws);
   return ({ dispatch, getState }) => {
     // Bind socket events
@@ -26,7 +28,7 @@ export default function createWSMiddleware(ws, option) {
       // const authToken = getState().auth.token;
 
       // Only process this particular middleware's messages from here on.
-      if (actionCopy.type.split('/').shift().indexOf(option) !== 0) {
+      if (actionCopy.type.split('/').shift().indexOf(prefix) !== 0) {
         next(actionCopy);
       } else {
         next(actionCopy);
