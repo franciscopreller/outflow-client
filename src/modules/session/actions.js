@@ -4,6 +4,7 @@ import {
   REMOVE_SESSION,
   CLOSE_SESSION,
   OPEN_CONNECTION,
+  APPEND_CONTENT,
 } from './constants';
 
 export function addSession(connection) {
@@ -50,4 +51,14 @@ export function openConnection(connection) {
       connection,
     }
   }
+}
+
+export function appendContent(lines, uuid) {
+  return {
+    type: APPEND_CONTENT,
+    payload: {
+      lines,
+      uuid,
+    }
+  };
 }

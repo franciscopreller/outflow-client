@@ -4,7 +4,7 @@ import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
 import AddConnectionIcon from 'material-ui/svg-icons/content/add-circle';
 import PreferencesIcon from 'material-ui/svg-icons/action/settings';
-import { addSession } from '../../modules/connection/actions';
+import { addSession } from '../../modules/session/actions';
 import AddConnectionDialog from './AddConnectionDialog';
 
 export class SideNav extends React.Component {
@@ -19,6 +19,8 @@ export class SideNav extends React.Component {
       open: false,
       addConnectionDialogOpen: false,
     };
+
+    // Bindings
     this.handleRequestChange = this.handleRequestChange.bind(this);
     this.handleOpenDialog = this.handleOpenDialog.bind(this);
     this.handleCloseDialog = this.handleCloseDialog.bind(this);

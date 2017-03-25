@@ -16,13 +16,15 @@ const tabLabel = (title, index, closeSession) => (
   </div>
 );
 
-export const HomeView = ({ sessions, closeSession }) => (
+export const HomeView = ({ connections, content, closeSession }) => (
   <div>
     <Tabs>
-      {sessions.map((conn, index) => (
-        <Tab key={`tab__${index}`} label={tabLabel(conn.name, index, closeSession)} onActive={() => console.log(conn.uuid)}>
+      {connections.map((conn, index) => (
+        <Tab key={`tab__${index}`} label={tabLabel(conn.name, index, closeSession)}>
           <ClientWindow uuid={conn.uuid}>
-            <div>Content goes here...</div>
+            {content.find(c => c.uuid === conn.uuid).lines.map((line, index) => (
+              <div style={{ height: '16px' }} dangerouslySetInnerHTML={{ __html: line }} key={`cwl__${index}`} />
+            ))}
           </ClientWindow>
         </Tab>
       ))}

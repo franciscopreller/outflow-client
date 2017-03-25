@@ -29,6 +29,7 @@ export class ClientWindow extends React.Component {
   }
 
   handleCommandPromptKeyPress(e) {
+    // Allow multi-line only for shift+enter and let enter be the submit key
     if (e.keyCode === 13 && !e.shiftKey) {
       this.setState({
         commandValue: '',
