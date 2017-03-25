@@ -1,0 +1,39 @@
+.client-window-wrapper {
+  display: flex;
+  height: 83vh;
+}
+
+.client-window {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  padding: 15px 15px 10px;
+  width: 100%;
+  background: black !important;
+  color: white !important;
+}
+
+.client-content {
+  flex-grow: 1;
+  height: 80%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-family: 'Source Code Pro', monospace !important;
+  font-size: 14px;
+  background: inherit !important;
+  color: inherit !important;
+}
+
+.client-command-line {
+  position: relative;
+  margin-top: 10px;
+  bottom: 0;
+  background: #424242;
+  border: none;
+  color: #eeeeee;
+  outline: none;
+  padding: 5px;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 14px;
+  resize: none;
+}
