@@ -5,6 +5,8 @@ export function bindWSEvents(ws, dispatch) {
   ws.on('connect', () => dispatch(actions.connected()));
   ws.on('error', (error) => dispatch(actions.error(error)));
   ws.on('disconnect', (code) => dispatch(actions.disconnected(code)));
+  // Messages from socket server are wrapper in Redux actions, so dispatch them seamlessly
+  ws.on('ws.message', (action) => dispatch(action));
 }
 
 /**

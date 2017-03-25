@@ -15,12 +15,11 @@ class AppContainer extends Component {
 
   render () {
     const { routes, store } = this.props;
-
     return (
       <Provider store={store}>
         <ThemeContainer>
-          <div style={{ height: '100%' }}>
-            <Router history={browserHistory} children={routes} />
+          <div>
+            <Router history={browserHistory} children={routes} style={{ flex: 1 }} />
           </div>
         </ThemeContainer>
       </Provider>

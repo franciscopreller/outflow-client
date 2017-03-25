@@ -4,8 +4,8 @@ import createSagaMiddleware from 'redux-saga';
 import { browserHistory } from 'react-router';
 import makeRootReducer from './reducers';
 import { updateLocation } from './location';
-import createWSMiddleware from '../middleware/ws';
-import { WS_PREFIX } from '../middleware/ws/constants';
+import createWSMiddleware from '../modules/ws/middleware';
+import { WS_PREFIX } from '../modules/ws/constants';
 import rootSaga from './sagas';
 
 export default (initialState = {}) => {

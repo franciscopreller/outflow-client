@@ -22,6 +22,9 @@ const muiTheme = getMuiTheme({
     color: Colors.teal500,
     textColor: Colors.grey50,
   },
+  inkBar: {
+    backgroundColor: Colors.grey50,
+  },
   tabs: {
     backgroundColor: Colors.teal200,
     textColor: Colors.grey50,

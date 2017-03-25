@@ -1,4 +1,4 @@
-import { WS_PREFIX } from '../../middleware/ws/constants';
+import { WS_PREFIX } from '../ws/constants';
 
 export const ADD_SESSION = 'ADD_CONNECTION';
 export const IDENTIFY_SESSION = `OPEN_CONNECTION`;
