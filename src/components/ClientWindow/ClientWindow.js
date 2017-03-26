@@ -30,7 +30,9 @@ export class ClientWindow extends React.Component {
     this.scrollToBottomOfContent = this.scrollToBottomOfContent.bind(this);
   }
 
-  componentWillMount
+  componentDidMount() {
+    setTimeout(this.scrollToBottomOfContent, 10);
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.contentLines) {
