@@ -21,11 +21,11 @@ export const HomeView = ({ connections, content, closeSession, sendCommand }) =>
     <Tabs>
       {connections.map((conn, index) => (
         <Tab key={`tab__${index}`} label={tabLabel(conn.name, index, closeSession)}>
-          <ClientWindow uuid={conn.uuid} sendCommand={sendCommand}>
-            {content.find(c => c.uuid === conn.uuid).lines.map((line, index) => (
-              <div style={{ height: '16px' }} dangerouslySetInnerHTML={{ __html: line }} key={`cwl__${index}`} />
-            ))}
-          </ClientWindow>
+          <ClientWindow
+            uuid={conn.uuid}
+            sendCommand={sendCommand}
+            contentLines={content.find(c => c.uuid === conn.uuid).lines}
+          />
         </Tab>
       ))}
     </Tabs>
