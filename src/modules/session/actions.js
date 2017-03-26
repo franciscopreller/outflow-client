@@ -5,6 +5,7 @@ import {
   CLOSE_SESSION,
   OPEN_CONNECTION,
   APPEND_CONTENT,
+  SESSION_COMMAND,
 } from './constants';
 
 export function addSession(connection) {
@@ -58,6 +59,18 @@ export function appendContent(lines, uuid) {
     type: APPEND_CONTENT,
     payload: {
       lines,
+      uuid,
+    }
+  };
+}
+
+export function sendCommand(command, uuid) {
+  return {
+    // We modify the SESSION_COMMAND type here to plug into the right command on server
+    // Still not sure if this will work when scaling, need to consider
+    type: `${SESSION_COMMAND}.${uuid}`,
+    payload: {
+      command,
       uuid,
     }
   };

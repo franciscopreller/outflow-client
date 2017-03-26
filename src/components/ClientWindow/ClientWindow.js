@@ -8,36 +8,42 @@ export class ClientWindow extends React.Component {
     super(props, context);
 
     this.state = {
-      commandValue: '',
-      commandRows: 1,
+      command: '',
+      rows: 1,
     };
 
     // Bindings
     this.focusOnCommandPrompt = this.focusOnCommandPrompt.bind(this);
     this.handleCommandPromptChange = this.handleCommandPromptChange.bind(this);
     this.handleCommandPromptKeyPress = this.handleCommandPromptKeyPress.bind(this);
+    this.sendCommand = this.sendCommand.bind(this);
   }
 
   focusOnCommandPrompt() {
     this.refs.prompt.focus();
   }
 
+  sendCommand(command) {
+    this.props.sendCommand(command, this.props.uuid);
+  }
+
   handleCommandPromptChange(e) {
     this.setState({
-      commandValue: e.target.value,
+      command: e.target.value,
     });
   }
 
   handleCommandPromptKeyPress(e) {
     // Allow multi-line only for shift+enter and let enter be the submit key
     if (e.keyCode === 13 && !e.shiftKey) {
+      this.sendCommand(this.state.command);
       this.setState({
-        commandValue: '',
-        commandRows: 1,
+        command: '',
+        rows: 1,
       });
     } else if (e.keyCode === 13 && e.shiftKey) {
       this.setState({
-        commandRows: this.state.commandRows + 1,
+        rows: this.state.rows + 1,
       })
     }
   }
@@ -52,8 +58,8 @@ export class ClientWindow extends React.Component {
           <textarea
             ref="prompt"
             className="client-command-line"
-            rows={this.state.commandRows}
-            value={this.state.commandValue}
+            rows={this.state.rows}
+            value={this.state.command}
             onChange={this.handleCommandPromptChange}
             onKeyDown={this.handleCommandPromptKeyPress}
           />

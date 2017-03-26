@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import Home from '../components/HomeView';
-import { closeSession } from '../../../modules/session/actions';
+import { closeSession, sendCommand } from '../../../modules/session/actions';
 
 const mapDispatchToProps = {
-  closeSession
+  closeSession,
+  sendCommand,
 };
 
 const mapStateToProps = (state) => ({

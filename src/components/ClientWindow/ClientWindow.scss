@@ -11,6 +11,7 @@
   width: 100%;
   background: black !important;
   color: white !important;
+  border: 1px solid #424242;
 }
 
 .client-content {
@@ -18,8 +19,8 @@
   height: 80%;
   overflow-x: hidden;
   overflow-y: auto;
-  font-family: 'Source Code Pro', monospace !important;
-  font-size: 14px;
+  font-family: 'Cutive Mono', monospace !important;
+  font-size: 11px;
   background: inherit !important;
   color: inherit !important;
 }
@@ -33,7 +34,7 @@
   color: #eeeeee;
   outline: none;
   padding: 5px;
-  font-family: 'Source Code Pro', monospace;
-  font-size: 14px;
+  font-family: 'Cutive Mono', monospace;
+  font-size: 11px;
   resize: none;
 }
