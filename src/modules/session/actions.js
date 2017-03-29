@@ -6,6 +6,7 @@ import {
   OPEN_CONNECTION,
   APPEND_CONTENT,
   SESSION_COMMAND,
+  APPEND_SYSTEM_MSG,
 } from './constants';
 
 export function addSession(connection) {
@@ -59,6 +60,16 @@ export function appendContent(lines, uuid) {
     type: APPEND_CONTENT,
     payload: {
       lines,
+      uuid,
+    }
+  };
+}
+
+export function appendSystemMessages(messages, uuid) {
+  return {
+    type: APPEND_SYSTEM_MSG,
+    payload: {
+      messages,
       uuid,
     }
   };
