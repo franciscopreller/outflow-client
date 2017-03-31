@@ -3,7 +3,7 @@ import {
   IDENTIFY_SESSION,
   REMOVE_SESSION,
   CLOSE_SESSION,
-  OPEN_CONNECTION,
+  SESSION_CONNECT,
   APPEND_CONTENT,
   SESSION_COMMAND,
   APPEND_SYSTEM_MSG,
@@ -48,7 +48,7 @@ export function removeSession(connection) {
 
 export function openConnection(connection) {
   return {
-    type: OPEN_CONNECTION,
+    type: SESSION_CONNECT,
     payload: {
       connection,
     }

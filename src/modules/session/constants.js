@@ -13,4 +13,4 @@ export const SESSION_ERROR = 'SESSION_ERROR';
 
 // Web-socket actions
 export const SESSION_COMMAND = `${WS_PREFIX}/session.command`;
-export const OPEN_CONNECTION = `${WS_PREFIX}/connection.open`;
+export const SESSION_CONNECT = `${WS_PREFIX}/session.connect`;
