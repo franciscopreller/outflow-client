@@ -3,7 +3,10 @@ import {
   IDENTIFY_SESSION,
   REMOVE_SESSION,
   CLOSE_SESSION,
-  OPEN_CONNECTION,
+  SESSION_CONNECT,
+  APPEND_CONTENT,
+  SESSION_COMMAND,
+  APPEND_SYSTEM_MSG,
 } from './constants';
 
 export function addSession(connection) {
@@ -45,9 +48,41 @@ export function removeSession(connection) {
 
 export function openConnection(connection) {
   return {
-    type: OPEN_CONNECTION,
+    type: SESSION_CONNECT,
     payload: {
       connection,
     }
   }
+}
+
+export function appendContent(lines, uuid) {
+  return {
+    type: APPEND_CONTENT,
+    payload: {
+      lines,
+      uuid,
+    }
+  };
+}
+
+export function appendSystemMessages(messages, uuid) {
+  return {
+    type: APPEND_SYSTEM_MSG,
+    payload: {
+      messages,
+      uuid,
+    }
+  };
+}
+
+export function sendCommand(command, uuid) {
+  return {
+    // We modify the SESSION_COMMAND type here to plug into the right command on server
+    // Still not sure if this will work when scaling, need to consider
+    type: `${SESSION_COMMAND}.${uuid}`,
+    payload: {
+      command,
+      uuid,
+    }
+  };
 }

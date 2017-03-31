@@ -7,10 +7,10 @@ export default (store) => ({
       const Home = require('./containers/HomeContainer').default;
 
       // @TODO: Inject this in global scope
-      const connectionReducer = require('../../modules/connection/reducers').default;
+      const sessionReducer = require('../../modules/session/reducers').default;
 
       // Inject reducers
-      injectReducer(store, { key: 'connection', reducer: connectionReducer });
+      injectReducer(store, { key: 'session', reducer: sessionReducer });
 
       // Invoke callback
       cb(null, Home);
