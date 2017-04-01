@@ -17,7 +17,6 @@ function* addConnectionSession(action) {
     ];
 
     // Send system messages
-    console.log('sending append system message action');
     yield put(actions.appendSystemMessages(messages, uuid));
   } catch (err) {
     yield console.error('Could not add connection', err);
@@ -71,6 +70,30 @@ function* appendSystemMsgToContent(action) {
   }
 }
 
+function* appendErrorMsgToContent(action) {
+  try {
+    const error = action.payload.error;
+    const lines = [(
+      `<span style="color: red">%%% ${error}</span>`
+    )];
+    yield put(actions.appendContent(lines, action.payload.uuid));
+  } catch (err) {
+    yield console.error('Could not add system messages to content', err);
+  }
+}
+
+function* sessionDisconnected(action) {
+  try {
+    const connection = yield select((state) => state.session.connections.find(s => s.uuid === action.payload.uuid));
+    const messages = [
+      `Disconnected from ${connection.name} on: [ ${connection.host}:${connection.port} ]`,
+    ];
+    yield put(actions.appendSystemMessages(messages, action.payload.uuid));
+  } catch (err) {
+    yield console.error('Could not add system messages to content', err);
+  }
+}
+
 function* connectionSaga() {
   yield [
     takeEvery(constants.ADD_SESSION, addConnectionSession),
@@ -78,6 +101,8 @@ function* connectionSaga() {
     takeEvery(constants.CLOSE_SESSION, closeConnectionSession),
     takeEvery(constants.REMOVE_SESSION, removeConnectionSession),
     takeEvery(constants.SESSION_OUTPUT, parseRawSessionOutput),
+    takeEvery(constants.SESSION_ERROR, appendErrorMsgToContent),
+    takeEvery(constants.SESSION_DISCONNECTED, sessionDisconnected),
     takeEvery(constants.APPEND_SYSTEM_MSG, appendSystemMsgToContent),
   ];
 }
