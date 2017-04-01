@@ -125,7 +125,7 @@ export class ClientWindow extends React.Component {
 
   render() {
     return (
-      <div className="client-window-wrapper">
+      <div>
         <Paper zDepth={2} className="client-window">
           <Paper className="client-content" onTouchTap={this.focusOnCommandPrompt}>
             {this.state.lines.map((line, index) => (

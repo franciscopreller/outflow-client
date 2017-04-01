@@ -1,9 +1,13 @@
 import { combineReducers } from 'redux';
 import locationReducer from './location';
 
+// Custom global reducers
+import sessionReducer from '../modules/session/reducers';
+
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
+    session: sessionReducer,
     ...asyncReducers
   });
 };

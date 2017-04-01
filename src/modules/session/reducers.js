@@ -51,7 +51,7 @@ const ACTION_HANDLERS = {
 };
 
 // Expose reducer
-export default function connectionReducer(state = initialState, action) {
+export default function sessionReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type];
 
   return handler ? handler(state, action) : state;

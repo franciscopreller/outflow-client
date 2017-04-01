@@ -8,24 +8,23 @@ import createWSMiddleware from '../modules/ws/middleware';
 import { WS_PREFIX } from '../modules/ws/constants';
 import rootSaga from './sagas';
 
+// Set the websocket options
+const webSocketOptions = {
+  hostname: 'outflow.local',
+  port: 80,
+  path: '/ws',
+  autoreconnect: true,
+  perMessageDeflate: true,
+};
+
 export default (initialState = {}) => {
-  const wsMiddleware = createWSMiddleware(WS_PREFIX, {
-    hostname: 'outflow.local',
-    port: 80,
-    path: '/ws',
-    autoreconnect: true,
-    perMessageDeflate: true,
-  });
+  const wsMiddleware = createWSMiddleware(WS_PREFIX, webSocketOptions);
   const sagaMiddleware = createSagaMiddleware();
-
-  // Middleware Configuration
   const middleware = [wsMiddleware, sagaMiddleware];
-
-  // Store Enhancers
   const enhancers = [autoRehydrate()];
-
   let composeEnhancers = compose;
 
+  // Load redux dev tools
   if (__DEV__) {
     const composeWithDevToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
     if (typeof composeWithDevToolsExtension === 'function') {

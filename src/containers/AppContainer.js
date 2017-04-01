@@ -1,25 +1,27 @@
-import React, { Component, PropTypes } from 'react';
-import { browserHistory, Router } from 'react-router';
-import { Provider } from 'react-redux';
+import React, {Component, PropTypes} from 'react';
+import {Provider} from 'react-redux';
 import ThemeContainer from './ThemeContainer';
+import HeaderContainer from './HeaderContainer';
+import DashboardContainer from './DashboardContainer';
+import '../styles/core.scss';
 
 class AppContainer extends Component {
   static propTypes = {
-    routes : PropTypes.object.isRequired,
-    store  : PropTypes.object.isRequired
+    store: PropTypes.object.isRequired
   };
 
-  shouldComponentUpdate () {
+  shouldComponentUpdate() {
     return false;
   }
 
-  render () {
-    const { routes, store } = this.props;
+  render() {
+    const {store} = this.props;
     return (
       <Provider store={store}>
         <ThemeContainer>
-          <div>
-            <Router history={browserHistory} children={routes} style={{ flex: 1 }} />
+          <div className="container">
+            <HeaderContainer style={{ flex: 1 }}/>
+            <DashboardContainer className="core-layout" />
           </div>
         </ThemeContainer>
       </Provider>

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import { indigo500 } from 'material-ui/styles/colors';
-import ClientWindow from '../../../components/ClientWindow';
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import ClientWindow from '../ClientWindow';
 
 const tabLabel = (title, index, closeSession) => (
   <div>
@@ -16,7 +16,7 @@ const tabLabel = (title, index, closeSession) => (
   </div>
 );
 
-export const HomeView = ({ connections, content, closeSession, sendCommand }) => (
+export const Dashboard = ({ connections, content, closeSession, sendCommand }) => (
   <div>
     <Tabs>
       {connections.map((conn, index) => (
@@ -32,4 +32,4 @@ export const HomeView = ({ connections, content, closeSession, sendCommand }) =>
   </div>
 );
 
-export default HomeView;
+export default Dashboard;
