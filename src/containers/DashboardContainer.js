@@ -8,8 +8,8 @@ const mapDispatchToProps = ({
 });
 
 const mapStateToProps = (state) => ({
-  connections: state.session.connections,
-  content: state.session.content,
+  connections: state.connections,
+  content: state.content,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

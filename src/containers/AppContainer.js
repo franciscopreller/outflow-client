@@ -10,10 +10,6 @@ class AppContainer extends Component {
     store: PropTypes.object.isRequired
   };
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
   render() {
     const {store} = this.props;
     return (

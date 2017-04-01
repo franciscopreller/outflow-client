@@ -1,8 +1,8 @@
 import {
-  ADD_SESSION,
-  IDENTIFY_SESSION,
+  SESSION_OPEN,
+  SESSION_INIT,
   REMOVE_SESSION,
-  CLOSE_SESSION,
+  SESSION_CLOSE,
   SESSION_CONNECT,
   APPEND_CONTENT,
   SESSION_COMMAND,
@@ -11,28 +11,28 @@ import {
 
 export function addSession(connection) {
   return {
-    type: ADD_SESSION,
+    type: SESSION_OPEN,
     payload: {
       connection,
     },
   };
 }
 
-export function openSession(index, uuid) {
+export function initialiseSession(connection, uuid) {
   return {
-    type: IDENTIFY_SESSION,
+    type: SESSION_INIT,
     payload: {
-      index,
+      connection,
       uuid,
     },
   };
 }
 
-export function closeSession(index) {
+export function closeSession(uuid) {
   return {
-    type: CLOSE_SESSION,
+    type: SESSION_CLOSE,
     payload: {
-      index,
+      uuid,
     },
   };
 }
@@ -46,7 +46,7 @@ export function removeSession(connection) {
   };
 }
 
-export function openConnection(connection) {
+export function sessionConnect(connection) {
   return {
     type: SESSION_CONNECT,
     payload: {

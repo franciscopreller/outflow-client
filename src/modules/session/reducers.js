@@ -1,53 +1,20 @@
-import { ADD_SESSION, REMOVE_SESSION, IDENTIFY_SESSION, APPEND_CONTENT } from './constants';
+import { SESSION_INIT, SESSION_CLOSE } from './constants';
 
 // Initial State
-const initialState = {
-  connections: [],
-  content: [],
-};
+const initialState = [];
 
 // Handlers
 const ACTION_HANDLERS = {
-  [ADD_SESSION]: (state, action) => Object.assign({}, state, {
-    connections: [
-      ...state.connections,
-      Object.assign({}, action.payload.connection),
-    ],
-    content: [
-      ...state.content,
-      Object.assign({}, { lines: [] }),
-    ],
-  }),
-  [IDENTIFY_SESSION]: (state, action) => Object.assign({}, state, {
-    connections: state.connections.map((connection, index) =>
-      (index !== action.payload.index) ? connection : Object.assign({}, connection, {
-        uuid: action.payload.uuid
-      })
-    ),
-    content: state.content.map((content, index) =>
-      (index !== action.payload.index) ? content : Object.assign({}, content, {
-        uuid: action.payload.uuid
-      })
-    ),
-  }),
-  [REMOVE_SESSION]: (state, action) => Object.assign({}, state, {
-    connections: [
-      ...state.connections.filter((connection) => connection.uuid !== action.payload.connection.uuid),
-    ],
-    content: [
-      ...state.content.filter((content) => content.uuid !== action.payload.connection.uuid),
-    ],
-  }),
-  [APPEND_CONTENT]: (state, action) => Object.assign({}, state, {
-    content: state.content.map((content) => (
-      (content.uuid !== action.payload.uuid) ? content : Object.assign({}, content, {
-        lines: [
-          ...content.lines,
-          ...action.payload.lines,
-        ],
-      })
-    )),
-  }),
+  [SESSION_INIT]: (state, action) => [
+    ...state, {
+      uuid: action.payload.uuid,
+      name: action.payload.connection.name,
+      hidePrompt: false,
+    }
+  ],
+  [SESSION_CLOSE]: (state, action) => [
+    ...state.filter((s) => s.uuid !== action.payload.uuid),
+  ],
 };
 
 // Expose reducer
