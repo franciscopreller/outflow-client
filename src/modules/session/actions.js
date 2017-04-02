@@ -1,52 +1,62 @@
 import {
-  ADD_SESSION,
-  IDENTIFY_SESSION,
-  REMOVE_SESSION,
-  CLOSE_SESSION,
+  SESSION_OPEN,
+  SESSION_INIT,
+  SESSION_CLOSED,
+  SESSION_CLOSE,
   SESSION_CONNECT,
   APPEND_CONTENT,
   SESSION_COMMAND,
   APPEND_SYSTEM_MSG,
+  SESSION_DISCONNECT,
 } from './constants';
 
 export function addSession(connection) {
   return {
-    type: ADD_SESSION,
+    type: SESSION_OPEN,
     payload: {
       connection,
     },
   };
 }
 
-export function openSession(index, uuid) {
+export function initialiseSession(connection, uuid) {
   return {
-    type: IDENTIFY_SESSION,
+    type: SESSION_INIT,
     payload: {
-      index,
+      connection,
       uuid,
     },
   };
 }
 
-export function closeSession(index) {
+export function closeSession(uuid) {
   return {
-    type: CLOSE_SESSION,
+    type: SESSION_CLOSE,
     payload: {
-      index,
+      uuid,
     },
   };
 }
 
-export function removeSession(connection) {
+export function sessionClosed(uuid) {
   return {
-    type: REMOVE_SESSION,
+    type: SESSION_CLOSED,
     payload: {
-      connection,
+      uuid,
     },
   };
 }
 
-export function openConnection(connection) {
+export function disconnectSession(uuid) {
+  return {
+    type: SESSION_DISCONNECT,
+    payload: {
+      uuid,
+    },
+  };
+}
+
+export function sessionConnect(connection) {
   return {
     type: SESSION_CONNECT,
     payload: {

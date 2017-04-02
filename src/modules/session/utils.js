@@ -10,7 +10,8 @@ export function parseLineFragment(fragment) {
     fragment.codes.types.forEach((t) => {
       switch (t) {
         case 'bold':
-          styles += ' font-weight: bold;';
+          // For now do nothing, later change color
+          // styles += ' font-weight: bold;';
           break;
         case 'italic':
           styles += ' text-decoration: italic;';

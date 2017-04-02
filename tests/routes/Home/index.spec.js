@@ -1,6 +1,6 @@
-import HomeRoute from 'routes/Home'
+import HomeRoute from 'routes/Dashboard'
 
-describe('(Route) Home', () => {
+describe('(Route) Dashboard', () => {
   let _component
 
   beforeEach(() => {
