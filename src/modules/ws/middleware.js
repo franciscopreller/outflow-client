@@ -44,16 +44,18 @@ export function connectWebSocket(options, dispatch) {
  * @param send
  */
 export function handleAction(prefix, action, next, send) {
-  // Only process this particular middleware's messages from here on.
-  if (action.type.split('/').shift().indexOf(prefix) !== 0) {
-    next(action);
-  } else {
-    next(action);
-    const event = action.type.split('/')[1];
-    const payload = action.payload;
+  if (action.type) {
+    // Only process this particular middleware's messages from here on.
+    if (action.type.split('/').shift().indexOf(prefix) !== 0) {
+      next(action);
+    } else {
+      next(action);
+      const event = action.type.split('/')[1];
+      const payload = action.payload;
 
-    // Send event to socket server
-    send(event, { payload });
+      // Send event to socket server
+      send(event, { payload });
+    }
   }
 }
 
@@ -85,7 +87,7 @@ export default function createWSMiddleware(prefix, options) {
           // Handle current action
           next(actionCopy);
           SOCKET_READY = true;
-          ACTION_CACHE = undefined;
+          ACTION_CACHE = [];
 
           // Connect to websocket
           send = connectWebSocket(options, dispatch);

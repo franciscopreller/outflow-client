@@ -5,7 +5,7 @@ import * as actions from './actions';
 function* identifyWS() {
   try {
     const uuid = yield select((state) => state.auth.uuid);
-    yield put(actions.updateWebsocketAuth(uuid));
+    yield put(actions.updateWebsocketAuth(`#${uuid}`));
   } catch (err) {
     yield console.error('Could not identify to web socket')
   }
