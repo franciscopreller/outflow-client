@@ -9,6 +9,7 @@ export class ClientWindow extends React.Component {
     contentLines: React.PropTypes.array,
     sendCommand: React.PropTypes.func,
     uuid: React.PropTypes.string,
+    hideCommandLine: React.PropTypes.bool,
   };
 
   constructor(props, context) {
@@ -16,28 +17,26 @@ export class ClientWindow extends React.Component {
 
     this.state = {
       lines: props.contentLines,
+      shouldScroll: true,
+      hideCommandLine: props.hideCommandLine,
     };
-
-    // Bindings
-    this.focusOnCommandPrompt = this.focusOnCommandPrompt.bind(this);
-    this.scrollToBottomOfContent = this.scrollToBottomOfContent.bind(this);
   }
 
   componentDidMount() {
-    setTimeout(this.scrollToBottomOfContent, 10);
+    setTimeout(this.scrollToBottomOfContent.bind(this), 10);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.contentLines) {
-      this.setState({
-        lines: nextProps.contentLines,
-      });
-    }
+    this.setState({
+      lines: nextProps.contentLines,
+      hideCommandLine: nextProps.hideCommandLine,
+    });
   }
 
   shouldComponentUpdate(nextProps) {
     switch (true) {
       case (nextProps.contentLines.length !== this.state.lines.length):
+      case (nextProps.hideCommandLine !== this.state.hideCommandLine):
         return true;
       default:
         return false;
@@ -45,7 +44,7 @@ export class ClientWindow extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.lines !== this.state.lines) {
+    if (this.state.shouldScroll && prevState.lines !== this.state.lines) {
       this.scrollToBottomOfContent();
     }
   }
@@ -56,20 +55,33 @@ export class ClientWindow extends React.Component {
   }
 
   focusOnCommandPrompt() {
-    this.refs.prompt.focus();
+    return () => this.refs.prompt.focus();
+  }
+
+  handleScroll() {
+    return (e) => {
+      const { scrollTop, scrollHeight, offsetHeight } = e.target;
+      const shouldScroll = ((scrollTop + 1) >= scrollHeight - offsetHeight);
+      this.setState({ shouldScroll });
+    }
   }
 
   render() {
     return (
       <div>
         <Paper zDepth={2} className="client-window">
-          <Paper className="client-content" onTouchTap={this.focusOnCommandPrompt}>
+          <Paper className="client-content" onTouchTap={this.focusOnCommandPrompt()} onScroll={this.handleScroll()}>
             {this.state.lines.map((line, index) => (
-              <div style={{height: '16px'}} dangerouslySetInnerHTML={{__html: line}} key={`cwl__${index}`}/>
+              <div style={{height: '16px'}} dangerouslySetInnerHTML={{__html: line}} key={`cwl__${index}`} />
             ))}
             <div style={{float: 'left', clear: 'both'}} ref={el => { this.contentEndEl = el; }} />
           </Paper>
-          <CommandLine sendCommand={this.props.sendCommand} uuid={this.props.uuid} />
+          <CommandLine
+            ref="prompt"
+            sendCommand={this.props.sendCommand}
+            uuid={this.props.uuid}
+            hide={this.state.hideCommandLine}
+          />
         </Paper>
       </div>
     );

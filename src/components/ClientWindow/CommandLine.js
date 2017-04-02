@@ -20,6 +20,12 @@ export class CommandLine extends React.Component {
     this.resetPrompt = this.resetPrompt.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      hide: nextProps.hide,
+    });
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     switch (true) {
       case (nextState.hide !== this.state.hide):
@@ -29,6 +35,16 @@ export class CommandLine extends React.Component {
       default:
         return false;
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.hide !== this.state.lines) {
+      this.focus();
+    }
+  }
+
+  focus() {
+    this.refs.input.focus();
   }
 
   resetPrompt() {
@@ -88,6 +104,7 @@ export class CommandLine extends React.Component {
 
   render() {
     const props = {
+      ref: 'input',
       className: 'client-command-line',
       value: this.state.command,
       onChange: this.handleCommandPromptChange,

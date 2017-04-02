@@ -1,4 +1,4 @@
-import { SESSION_CLOSE, SESSION_INIT } from '../session/constants';
+import { SESSION_CLOSED, SESSION_INIT } from '../session/constants';
 
 // Initial State
 const initialState = [];
@@ -9,7 +9,7 @@ const ACTION_HANDLERS = {
     ...state,
     Object.assign({}, action.payload.connection, { uuid: action.payload.uuid }),
   ],
-  [SESSION_CLOSE]: (state, action) => [
+  [SESSION_CLOSED]: (state, action) => [
     ...state.filter((connection) => connection.uuid !== action.payload.uuid),
   ],
 };

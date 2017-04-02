@@ -1,12 +1,13 @@
 import {
   SESSION_OPEN,
   SESSION_INIT,
-  REMOVE_SESSION,
+  SESSION_CLOSED,
   SESSION_CLOSE,
   SESSION_CONNECT,
   APPEND_CONTENT,
   SESSION_COMMAND,
   APPEND_SYSTEM_MSG,
+  SESSION_DISCONNECT,
 } from './constants';
 
 export function addSession(connection) {
@@ -37,11 +38,20 @@ export function closeSession(uuid) {
   };
 }
 
-export function removeSession(connection) {
+export function sessionClosed(uuid) {
   return {
-    type: REMOVE_SESSION,
+    type: SESSION_CLOSED,
     payload: {
-      connection,
+      uuid,
+    },
+  };
+}
+
+export function disconnectSession(uuid) {
+  return {
+    type: SESSION_DISCONNECT,
+    payload: {
+      uuid,
     },
   };
 }

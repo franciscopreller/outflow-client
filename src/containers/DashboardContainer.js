@@ -8,8 +8,10 @@ const mapDispatchToProps = ({
 });
 
 const mapStateToProps = (state) => ({
-  connections: state.connections,
-  content: state.content,
+  sessions: state.sessions.map((session) => Object.assign({}, session, {
+    connection: state.connections.find((conn) => conn.uuid === session.uuid),
+    content: state.content.find((content) => content.uuid === session.uuid),
+  })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

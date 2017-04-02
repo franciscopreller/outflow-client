@@ -4,34 +4,64 @@ import { indigo500 } from 'material-ui/styles/colors';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import ClientWindow from '../ClientWindow';
 
-const tabLabel = (title, uuid, closeSession) => (
-  <div>
-    <span style={{float: 'left'}}>{title}</span>
-    <CloseIcon
-      color="white"
-      hoverColor={indigo500}
-      style={{float: 'right', height: '16px', width: '16px', marginLeft: '10px'}}
-      onTouchTap={() => closeSession(uuid)}
-    />
-  </div>
-);
+export class Dashboard extends React.Component {
+  static propTypes = {
+    sessions: React.PropTypes.array,
+    closeSession: React.PropTypes.func,
+  };
 
-export const Dashboard = ({ connections, content, closeSession, sendCommand }) => {
-  return (
-    <div>
-      <Tabs>
-        {connections.map((conn, index) => (
-          <Tab key={`tab__${index}`} label={tabLabel(conn.name, conn.uuid, closeSession)}>
-            <ClientWindow
-              uuid={conn.uuid}
-              sendCommand={sendCommand}
-              contentLines={content.find(c => c.uuid === conn.uuid).lines}
-            />
-          </Tab>
-        ))}
-      </Tabs>
-    </div>
-  );
-};
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      sessions: props.sessions
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      sessions: Object.assign([], nextProps.sessions)
+    });
+  }
+
+  closeSession(uuid) {
+    return () => {
+      this.props.closeSession(uuid);
+    };
+  }
+
+  getTabLabel(session) {
+    return (
+      <div>
+        <span style={{float: 'left'}}>{session.name}</span>
+        <CloseIcon
+          color="white"
+          hoverColor={indigo500}
+          style={{float: 'right', height: '16px', width: '16px', marginLeft: '10px'}}
+          onTouchTap={this.closeSession(session.uuid)}
+        />
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <div>
+        <Tabs>
+          {this.state.sessions.map((session, index) => (
+            <Tab key={`tab__${index}`} label={this.getTabLabel(session)}>
+              <ClientWindow
+                uuid={session.uuid}
+                sendCommand={this.props.sendCommand}
+                contentLines={session.content.lines}
+                hideCommandLine={session.hidePrompt}
+              />
+            </Tab>
+          ))}
+        </Tabs>
+      </div>
+    );
+  }
+}
 
 export default Dashboard;

@@ -21,3 +21,4 @@ export const SESSION_SHOW_PROMPT_REQUESTED = 'SESSION_SHOW_PROMPT_REQUESTED';
 // Web-socket actions
 export const SESSION_COMMAND = `${WS_PREFIX}/session.command`;
 export const SESSION_CONNECT = `${WS_PREFIX}/session.connect`;
+export const SESSION_DISCONNECT = `${WS_PREFIX}/session.disconnect`;
