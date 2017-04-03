@@ -43,7 +43,6 @@ function* appendCommandToContent(action) {
     // Since every line is in a span, we get the last character from the string, minus the 7 characters for </span>
     const lastChar = lastLine.substr(lastLine.length - 8).charAt(0);
     const command = `<span style="color: yellow">${(hidden) ? '************' : action.payload.command}</span>`;
-    console.log({ lastChar, lastLine, empty: lastChar.trim().length });
     if (lastChar.trim().length === 0) {
       yield put(actions.appendSameLineContent(command, action.payload.uuid));
     } else {
