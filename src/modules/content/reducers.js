@@ -1,4 +1,4 @@
-import { SESSION_CLOSE, SESSION_INIT, APPEND_CONTENT } from '../session/constants';
+import { SESSION_CLOSE, SESSION_INIT, APPEND_CONTENT, APPEND_SAME_LINE_CONTENT } from '../session/constants';
 
 // Initial State
 const initialState = [];
@@ -20,6 +20,13 @@ const ACTION_HANDLERS = {
         ...content.lines,
         ...action.payload.lines,
       ],
+    })
+  )),
+  [APPEND_SAME_LINE_CONTENT]: (state, action) => state.map((content) => (
+    (content.uuid !== action.payload.uuid) ? content : Object.assign({}, content, {
+      lines: content.lines.map((line, index) => (
+        (index < (content.lines.length - 1)) ? line : `${line}${action.payload.line}`
+      )),
     })
   )),
 };

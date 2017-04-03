@@ -55,7 +55,7 @@ export class CommandLine extends React.Component {
   }
 
   sendCommand(command) {
-    this.props.sendCommand(command, this.props.uuid);
+    this.props.sendCommand(command, this.props.uuid, this.state.hide);
   }
 
   handleCommandPromptChange(e) {
