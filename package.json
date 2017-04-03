@@ -1,10 +1,10 @@
 {
-  "name": "react-redux-starter-kit",
-  "version": "3.0.0-alpha.2",
-  "description": "Get started with React, Redux, and React-Router!",
+  "name": "outflow-client",
+  "version": "0.0.1",
+  "description": "Outflow Telnet Client",
   "main": "index.js",
   "engines": {
-    "node": ">=4.5.0",
+    "node": ">=7.5.0",
     "npm": "^3.0.0"
   },
   "scripts": {

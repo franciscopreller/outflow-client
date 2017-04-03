@@ -60,7 +60,7 @@ export function sessionConnect(connection) {
   return {
     type: SESSION_CONNECT,
     payload: {
-      connection,
+      ...connection,
     }
   }
 }
@@ -87,9 +87,7 @@ export function appendSystemMessages(messages, uuid) {
 
 export function sendCommand(command, uuid) {
   return {
-    // We modify the SESSION_COMMAND type here to plug into the right command on server
-    // Still not sure if this will work when scaling, need to consider
-    type: `${SESSION_COMMAND}.${uuid}`,
+    type: SESSION_COMMAND,
     payload: {
       command,
       uuid,
