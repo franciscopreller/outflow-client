@@ -34,8 +34,10 @@ export class ClientWindow extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
+    const linesLength = nextProps.contentLines.length;
     switch (true) {
-      case (nextProps.contentLines.length !== this.state.lines.length):
+      case (linesLength !== this.state.lines.length):
+      case (nextProps.contentLines[linesLength - 1].length !== this.state.lines[this.state.lines.length - 1]):
       case (nextProps.hideCommandLine !== this.state.hideCommandLine):
         return true;
       default:

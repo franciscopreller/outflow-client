@@ -8,6 +8,7 @@ import {
   SESSION_COMMAND,
   APPEND_SYSTEM_MSG,
   SESSION_DISCONNECT,
+  APPEND_SAME_LINE_CONTENT,
 } from './constants';
 
 export function addSession(connection) {
@@ -75,6 +76,16 @@ export function appendContent(lines, uuid) {
   };
 }
 
+export function appendSameLineContent(line, uuid) {
+  return {
+    type: APPEND_SAME_LINE_CONTENT,
+    payload: {
+      line,
+      uuid,
+    },
+  };
+}
+
 export function appendSystemMessages(messages, uuid) {
   return {
     type: APPEND_SYSTEM_MSG,
@@ -85,12 +96,13 @@ export function appendSystemMessages(messages, uuid) {
   };
 }
 
-export function sendCommand(command, uuid) {
+export function sendCommand(command, uuid, hidden) {
   return {
     type: SESSION_COMMAND,
     payload: {
       command,
       uuid,
+      hidden,
     },
   };
 }

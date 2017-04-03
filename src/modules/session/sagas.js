@@ -34,7 +34,7 @@ function* initSession(action) {
 function* sessionSaga() {
   yield [
     takeEvery(constants.SESSION_OPEN, openSession),
-    takeEvery(constants.SESSION_INIT, initSession),
+    takeEvery(constants.SESSION_INIT, initSession)
   ];
 }
 
