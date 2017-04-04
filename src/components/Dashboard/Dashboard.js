@@ -53,7 +53,7 @@ export class Dashboard extends React.Component {
               <ClientWindow
                 uuid={session.uuid}
                 sendCommand={this.props.sendCommand}
-                contentLines={session.content.lines}
+                contentSegments={session.content.segments}
                 hideCommandLine={session.hidePrompt}
               />
             </Tab>

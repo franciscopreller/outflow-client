@@ -1,11 +1,10 @@
-import { takeEvery, select, put } from 'redux-saga/effects';
+import { takeEvery, put } from 'redux-saga/effects';
 import * as constants from '../session/constants';
 import * as actions from '../session/actions';
-import * as utils from '../session/utils';
 
 function* parseRawSessionOutput(action) {
   try {
-    yield put(actions.appendContent(utils.parseLines(action.payload.lines), action.payload.uuid));
+    yield put(actions.appendContent(action.payload.segments, action.payload.uuid));
   } catch (err) {
     yield console.error('Could not parse raw content', err);
   }
@@ -14,10 +13,8 @@ function* parseRawSessionOutput(action) {
 function* appendSystemMsgToContent(action) {
   try {
     const messages = action.payload.messages;
-    const lines = messages.map((message) => (
-      `<span style="color: greenyellow">%%% ${message}</span>`
-    ));
-    yield put(actions.appendContent(lines, action.payload.uuid));
+    const segments = [{ classes: ["fg-cyan"], text: `${messages.join('\n')}\n` }];
+    yield put(actions.appendContent(segments, action.payload.uuid));
   } catch (err) {
     yield console.error('Could not add system messages to content', err);
   }
@@ -26,10 +23,8 @@ function* appendSystemMsgToContent(action) {
 function* appendErrorMsgToContent(action) {
   try {
     const error = action.payload.error;
-    const lines = [(
-      `<span style="color: red">%%% ${error}</span>`
-    )];
-    yield put(actions.appendContent(lines, action.payload.uuid));
+    const segments = [{ classes: ["fg-red"], text: `${error}\n` }];
+    yield put(actions.appendContent(segments, action.payload.uuid));
   } catch (err) {
     yield console.error('Could not add system messages to content', err);
   }
@@ -38,16 +33,11 @@ function* appendErrorMsgToContent(action) {
 function* appendCommandToContent(action) {
   try {
     const { hidden } = action.payload;
-    const lines = yield select((state) => state.content.find(c => c.uuid === action.payload.uuid).lines);
-    const lastLine = lines[lines.length - 1];
-    // Since every line is in a span, we get the last character from the string, minus the 7 characters for </span>
-    const lastChar = lastLine.substr(lastLine.length - 8).charAt(0);
-    const command = `<span style="color: yellow">${(hidden) ? '************' : action.payload.command}</span>`;
-    if (lastChar.trim().length === 0) {
-      yield put(actions.appendSameLineContent(command, action.payload.uuid));
-    } else {
-      yield put(actions.appendContent([command], action.payload.uuid));
-    }
+    const command = `${(hidden) ? '************' : action.payload.command}\n`;
+    const segments = [{ classes: ['fg-yellow at-bold'], text: command }];
+    yield put(actions.appendContent(segments, action.payload.uuid));
+
+    // @TODO: Check command history
   } catch (err) {
     yield console.error('Could not append command to terminal', err);
   }

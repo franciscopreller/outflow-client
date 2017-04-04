@@ -2,11 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Paper from 'material-ui/Paper';
 import CommandLine from './CommandLine';
+import * as SessionUtils from '../../modules/session/utils';
 import './ClientWindow.scss';
 
 export class ClientWindow extends React.Component {
   static propTypes = {
-    contentLines: React.PropTypes.array,
+    contentSegments: React.PropTypes.array,
     sendCommand: React.PropTypes.func,
     uuid: React.PropTypes.string,
     hideCommandLine: React.PropTypes.bool,
@@ -16,7 +17,7 @@ export class ClientWindow extends React.Component {
     super(props, context);
 
     this.state = {
-      lines: props.contentLines,
+      segments: props.contentSegments,
       shouldScroll: true,
       hideCommandLine: props.hideCommandLine,
     };
@@ -28,16 +29,16 @@ export class ClientWindow extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      lines: nextProps.contentLines,
+      segments: nextProps.contentSegments,
       hideCommandLine: nextProps.hideCommandLine,
     });
   }
 
   shouldComponentUpdate(nextProps) {
-    const linesLength = nextProps.contentLines.length;
+    const linesLength = nextProps.contentSegments.length;
     switch (true) {
-      case (linesLength !== this.state.lines.length):
-      case (nextProps.contentLines[linesLength - 1].length !== this.state.lines[this.state.lines.length - 1]):
+      case (linesLength !== this.state.segments.length):
+      case (nextProps.contentSegments[linesLength - 1].length !== this.state.segments[this.state.segments.length - 1]):
       case (nextProps.hideCommandLine !== this.state.hideCommandLine):
         return true;
       default:
@@ -46,7 +47,7 @@ export class ClientWindow extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.shouldScroll && prevState.lines !== this.state.lines) {
+    if (this.state.shouldScroll && prevState.segments !== this.state.segments) {
       this.scrollToBottomOfContent();
     }
   }
@@ -68,14 +69,29 @@ export class ClientWindow extends React.Component {
     }
   }
 
+  segmentShouldEndWithNewLine(content, segment, index, lastIndex) {
+    const lastCharIsNewLine = /\r?\n/.test(segment.text[segment.text.length - 1]);
+    return (lastCharIsNewLine || (index !== lastIndex));
+  }
+
   render() {
     return (
       <div>
         <Paper zDepth={2} className="client-window">
           <Paper className="client-content" onTouchTap={this.focusOnCommandPrompt()} onScroll={this.handleScroll()}>
-            {this.state.lines.map((line, index) => (
-              <div style={{height: '16px'}} dangerouslySetInnerHTML={{__html: line}} key={`cwl__${index}`} />
-            ))}
+            {this.state.segments.map((segment) => {
+              let props = {};
+              if (segment.classes) {
+                props.className = segment.classes.join(' ');
+              }
+              const newLinesArray = segment.text.split(/\r?\n/);
+              const lastIndex = newLinesArray.length - 1;
+              return newLinesArray.map((c, i, s) => (
+                <span {...props} dangerouslySetInnerHTML={{
+                  __html: `${SessionUtils.escapeForHtml(c)}${(this.segmentShouldEndWithNewLine(c, segment, i, lastIndex)) ? '<br />' : ''}`
+                }}/>
+              ));
+            })}
             <div style={{float: 'left', clear: 'both'}} ref={el => { this.contentEndEl = el; }} />
           </Paper>
           <CommandLine

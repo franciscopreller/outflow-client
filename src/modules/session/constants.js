@@ -5,10 +5,10 @@ export const SESSION_OPEN = 'SESSION_OPEN';
 export const SESSION_INIT = 'SESSION_INIT';
 export const SESSION_CLOSE = 'SESSION_CLOSE';
 
-export const REMOVE_SESSION = 'REMOVE_SESSION';
 export const APPEND_CONTENT = 'APPEND_CONTENT';
 export const APPEND_SYSTEM_MSG = 'APPEND_SYSTEM_MSG';
 export const APPEND_SAME_LINE_CONTENT = 'APPEND_SAME_LINE_CONTENT';
+export const COMMAND_SET_HISTORY = 'COMMAND_SET_HISTORY';
 
 // Incoming web-socket actions
 export const SESSION_OUTPUT = 'SESSION_OUTPUT';

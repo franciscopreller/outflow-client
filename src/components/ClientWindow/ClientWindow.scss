@@ -20,3 +20,80 @@
   background: inherit !important;
   color: inherit !important;
 }
+
+/*****
+ * Terminal Content Styles
+ ***********************************/
+$black: rgb(0, 0, 0);
+$bold-black: rgb(85, 85, 85);
+$blue: rgb(0, 0, 127);
+$bold-blue: rgb(0, 0, 252);
+$red: rgb(127, 0, 0);
+$bold-red: rgb(255, 0, 0);
+$yellow: rgb(205, 205, 0);
+$bold-yellow: rgb(255, 255, 0);
+$magenta: rgb(156, 0, 156);
+$bold-magenta: rgb(255, 0, 255);
+$cyan: rgb(0, 147, 147);
+$bold-cyan: rgb(0, 255, 255);
+$gray: rgb(187, 187, 187);
+$bold-gray: rgb(127, 127, 127);
+$green: rgb(0, 147, 0);
+$bold-green: rgb(0, 252, 0);
+$white: rgb(236, 236, 236);
+$bold-white: rgb(255, 255, 255);
+
+.fg-black {
+  color: $black;
+  &.at-bold {
+    color: $bold-black;
+  }
+}
+.fg-blue {
+  color: $blue;
+  &.at-bold {
+    color: $bold-blue;
+  }
+}
+.fg-red {
+  color: $red;
+  &.at-bold {
+    color: $bold-red;
+  }
+}
+.fg-yellow {
+  color: $yellow;
+  &.at-bold {
+    color: $bold-yellow
+  }
+}
+.fg-magenta {
+  color: $magenta;
+  &.at-bold {
+    color: $bold-magenta;
+  }
+}
+.fg-cyan {
+  color: $cyan;
+  &.at-bold {
+    color: $bold-cyan;
+  }
+}
+.fg-gray {
+  color: $gray;
+  &.at-bold {
+    color: $bold-gray;
+  }
+}
+.fg-green {
+  color: $green;
+  &.at-bold {
+    color: $bold-green;
+  }
+}
+.fg-white {
+  color: $white;
+  &.at-bold {
+    color: $bold-white;
+  }
+}

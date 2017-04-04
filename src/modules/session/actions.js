@@ -66,11 +66,11 @@ export function sessionConnect(connection) {
   }
 }
 
-export function appendContent(lines, uuid) {
+export function appendContent(segments, uuid) {
   return {
     type: APPEND_CONTENT,
     payload: {
-      lines,
+      segments,
       uuid,
     },
   };
