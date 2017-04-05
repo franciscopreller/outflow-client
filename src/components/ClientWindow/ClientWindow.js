@@ -72,28 +72,21 @@ export class ClientWindow extends React.Component {
     }
   }
 
-  segmentShouldEndWithNewLine(content, segment, index, lastIndex) {
-    const lastCharIsNewLine = /\r?\n/.test(segment.text[segment.text.length - 1]);
-    return (lastCharIsNewLine || (index !== lastIndex));
-  }
-
   render() {
     return (
       <div>
         <Paper zDepth={2} className="client-window">
           <Paper className="client-content" onTouchTap={this.focusOnCommandPrompt()} onScroll={this.handleScroll()}>
-            {this.state.segments.map((segment) => {
+            {this.state.segments.map((segment, key) => {
               let props = {};
               if (segment.classes) {
                 props.className = segment.classes.join(' ');
               }
-              const newLinesArray = segment.text.split(/\r?\n/);
-              const lastIndex = newLinesArray.length - 1;
-              return newLinesArray.map((c, i, s) => (
-                <span {...props} dangerouslySetInnerHTML={{
-                  __html: `${SessionUtils.escapeForHtml(c)}${(this.segmentShouldEndWithNewLine(c, segment, i, lastIndex)) ? '<br />' : ''}`
-                }}/>
-              ));
+              return (
+                <span key={`c__${key}`} {...props} dangerouslySetInnerHTML={{
+                  __html: SessionUtils.escapeForHtml(segment.text),
+                }} />
+              );
             })}
             <div style={{float: 'left', clear: 'both'}} ref={el => { this.contentEndEl = el; }} />
           </Paper>

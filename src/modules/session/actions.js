@@ -9,7 +9,7 @@ import {
   COMMAND_PRE_PROCESS,
   APPEND_SYSTEM_MSG,
   SESSION_DISCONNECT,
-  APPEND_SAME_LINE_CONTENT,
+  APPEND_COMMAND,
 } from './constants';
 
 export function addSession(connection) {
@@ -70,6 +70,16 @@ export function sessionConnect(connection) {
 export function appendContent(segments, uuid) {
   return {
     type: APPEND_CONTENT,
+    payload: {
+      segments,
+      uuid,
+    },
+  };
+}
+
+export function appendCommand(segments, uuid) {
+  return {
+    type: APPEND_COMMAND,
     payload: {
       segments,
       uuid,

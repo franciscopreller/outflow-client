@@ -31,11 +31,6 @@ export class CommandLine extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log({
-      hide: nextProps.hide,
-      history: nextProps.history,
-      maxHistoryIndex: (nextProps.history.length - 1),
-    });
     this.setState({
       hide: nextProps.hide,
       history: nextProps.history,

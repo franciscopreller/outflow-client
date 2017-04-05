@@ -14,7 +14,7 @@ function* appendSystemMsgToContent(action) {
   try {
     const messages = action.payload.messages;
     const segments = [{ classes: ["fg-cyan"], text: `${messages.join('\n')}\n` }];
-    yield put(actions.appendContent(segments, action.payload.uuid));
+    yield put(actions.appendCommand(segments, action.payload.uuid));
   } catch (err) {
     yield console.error('Could not add system messages to content', err);
   }
@@ -24,7 +24,7 @@ function* appendErrorMsgToContent(action) {
   try {
     const error = action.payload.error;
     const segments = [{ classes: ["fg-red"], text: `${error}\n` }];
-    yield put(actions.appendContent(segments, action.payload.uuid));
+    yield put(actions.appendCommand(segments, action.payload.uuid));
   } catch (err) {
     yield console.error('Could not add system messages to content', err);
   }
@@ -33,11 +33,11 @@ function* appendErrorMsgToContent(action) {
 function* appendCommandToContent(action) {
   try {
     const { hidden } = action.payload;
-    const command = `${(hidden) ? '************' : action.payload.command}\n`;
-    const segments = [{ classes: ['fg-yellow at-bold'], text: command }];
-    yield put(actions.appendContent(segments, action.payload.uuid));
-
-    // @TODO: Check command history
+    if (!hidden) {
+      const command = `${action.payload.command}\n`;
+      const segments = [{classes: ['fg-yellow at-bold'], text: command}];
+      yield put(actions.appendCommand(segments, action.payload.uuid));
+    }
   } catch (err) {
     yield console.error('Could not append command to terminal', err);
   }
