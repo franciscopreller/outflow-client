@@ -52,9 +52,10 @@ export class Dashboard extends React.Component {
             <Tab key={`tab__${index}`} label={this.getTabLabel(session)}>
               <ClientWindow
                 uuid={session.uuid}
-                sendCommand={this.props.sendCommand}
+                sendCommand={this.props.processCommand}
                 contentSegments={session.content.segments}
                 hideCommandLine={session.hidePrompt}
+                commandHistory={session.command.history}
               />
             </Tab>
           ))}

@@ -4,8 +4,9 @@ import {
   SESSION_CLOSED,
   SESSION_CLOSE,
   SESSION_CONNECT,
-  APPEND_CONTENT,
   SESSION_COMMAND,
+  APPEND_CONTENT,
+  COMMAND_PRE_PROCESS,
   APPEND_SYSTEM_MSG,
   SESSION_DISCONNECT,
   APPEND_SAME_LINE_CONTENT,
@@ -76,22 +77,23 @@ export function appendContent(segments, uuid) {
   };
 }
 
-export function appendSameLineContent(line, uuid) {
-  return {
-    type: APPEND_SAME_LINE_CONTENT,
-    payload: {
-      line,
-      uuid,
-    },
-  };
-}
-
 export function appendSystemMessages(messages, uuid) {
   return {
     type: APPEND_SYSTEM_MSG,
     payload: {
       messages,
       uuid,
+    },
+  };
+}
+
+export function processCommand(command, uuid, hidden) {
+  return {
+    type: COMMAND_PRE_PROCESS,
+    payload: {
+      command,
+      uuid,
+      hidden,
     },
   };
 }

@@ -22,13 +22,6 @@ const ACTION_HANDLERS = {
       ],
     })
   )),
-  // [APPEND_SAME_LINE_CONTENT]: (state, action) => state.map((content) => (
-  //   (content.uuid !== action.payload.uuid) ? content : Object.assign({}, content, {
-  //     segments: content.segments.map((line, index) => (
-  //       (index < (content.lines.length - 1)) ? line : `${line}${action.payload.line}`
-  //     )),
-  //   })
-  // )),
 };
 
 // Expose reducer

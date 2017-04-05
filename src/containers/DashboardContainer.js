@@ -1,16 +1,17 @@
 import { connect } from 'react-redux';
 import Dashboard from '../components/Dashboard';
-import { closeSession, sendCommand } from '../modules/session/actions';
+import { closeSession, processCommand } from '../modules/session/actions';
 
 const mapDispatchToProps = ({
   closeSession,
-  sendCommand,
+  processCommand,
 });
 
 const mapStateToProps = (state) => ({
   sessions: state.sessions.map((session) => Object.assign({}, session, {
     connection: state.connections.find((conn) => conn.uuid === session.uuid),
     content: state.content.find((content) => content.uuid === session.uuid),
+    command: state.command.find((command) => command.uuid === session.uuid),
   })),
 });
 

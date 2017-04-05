@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Paper from 'material-ui/Paper';
-import CommandLine from './CommandLine';
+import CommandLine from '../CommandLine/CommandLine';
 import * as SessionUtils from '../../modules/session/utils';
 import './ClientWindow.scss';
 
@@ -11,6 +11,7 @@ export class ClientWindow extends React.Component {
     sendCommand: React.PropTypes.func,
     uuid: React.PropTypes.string,
     hideCommandLine: React.PropTypes.bool,
+    commandHistory: React.PropTypes.array,
   };
 
   constructor(props, context) {
@@ -20,6 +21,7 @@ export class ClientWindow extends React.Component {
       segments: props.contentSegments,
       shouldScroll: true,
       hideCommandLine: props.hideCommandLine,
+      commandHistory: props.commandHistory,
     };
   }
 
@@ -31,6 +33,7 @@ export class ClientWindow extends React.Component {
     this.setState({
       segments: nextProps.contentSegments,
       hideCommandLine: nextProps.hideCommandLine,
+      commandHistory: nextProps.commandHistory,
     });
   }
 
@@ -98,6 +101,7 @@ export class ClientWindow extends React.Component {
             ref="prompt"
             sendCommand={this.props.sendCommand}
             uuid={this.props.uuid}
+            history={this.state.commandHistory}
             hide={this.state.hideCommandLine}
           />
         </Paper>
