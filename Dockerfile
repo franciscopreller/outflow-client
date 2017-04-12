@@ -22,5 +22,5 @@ RUN npm run deploy:prod
 
 # Run the init
 EXPOSE 8080
-ENTRYPOINT ["/usr/bin/node"]
+ENTRYPOINT ["node"]
 CMD ["bin/prod-server.js"]
