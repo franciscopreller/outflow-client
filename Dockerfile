@@ -17,6 +17,9 @@ RUN yarn install --production
 # Load the source into the docker image
 ADD . /home/app
 
+# Build it
+RUN npm run deploy:prod
+
 # Run the init
 EXPOSE 8080
 ENTRYPOINT ["/usr/bin/node"]
