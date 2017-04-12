@@ -3,6 +3,7 @@ import authSaga from '../modules/auth/sagas';
 import sessionSaga from '../modules/session/sagas';
 import connectionSaga from '../modules/connection/sagas';
 import contentSaga from '../modules/content/sagas';
+import commandSaga from '../modules/command/sagas';
 
 export default function* rootSaga() {
   yield [
@@ -10,5 +11,6 @@ export default function* rootSaga() {
     fork(sessionSaga),
     fork(connectionSaga),
     fork(contentSaga),
+    fork(commandSaga),
   ];
 }

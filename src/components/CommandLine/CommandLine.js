@@ -3,6 +3,13 @@ import * as keyCodes from './keyCodes';
 import './CommandLine.scss';
 
 export class CommandLine extends React.Component {
+  static PropTypes = {
+    hide: React.PropTypes.bool,
+    sendCommand: React.PropTypes.func,
+    uuid: React.PropTypes.string,
+    history: React.PropTypes.history,
+  };
+
   constructor(props, context) {
     super(props, context);
 
@@ -10,6 +17,9 @@ export class CommandLine extends React.Component {
       command: '',
       rows: 1,
       hide: false,
+      commandHistoryPointer: -1,
+      history: props.history,
+      maxHistoryIndex: props.history.length - 1,
     };
 
     // Bindings
@@ -23,6 +33,8 @@ export class CommandLine extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({
       hide: nextProps.hide,
+      history: nextProps.history,
+      maxHistoryIndex: (nextProps.history.length - 1),
     });
   }
 
@@ -51,6 +63,7 @@ export class CommandLine extends React.Component {
     this.setState({
       command: '',
       rows: 1,
+      commandHistoryPointer: -1,
     });
   }
 
@@ -78,6 +91,25 @@ export class CommandLine extends React.Component {
         this.setState({
           rows: this.state.rows + 1,
         });
+        break;
+      case (e.keyCode === keyCodes.UP_ARROW_KEY):
+        if (this.state.commandHistoryPointer < this.state.maxHistoryIndex) {
+          const index = this.state.commandHistoryPointer + 1;
+          this.setState({
+            commandHistoryPointer: index,
+            command: this.state.history[index],
+          });
+        }
+        break;
+      case (e.keyCode === keyCodes.DOWN_ARROW_KEY):
+        if (this.state.commandHistoryPointer >= 0) {
+          const index = this.state.commandHistoryPointer - 1;
+          const command = (index === -1) ? '' : this.state.history[index];
+          this.setState({
+            commandHistoryPointer: index,
+            command,
+          });
+        }
         break;
       default:
         break;

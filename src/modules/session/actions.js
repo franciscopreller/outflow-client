@@ -4,11 +4,12 @@ import {
   SESSION_CLOSED,
   SESSION_CLOSE,
   SESSION_CONNECT,
-  APPEND_CONTENT,
   SESSION_COMMAND,
+  APPEND_CONTENT,
+  COMMAND_PRE_PROCESS,
   APPEND_SYSTEM_MSG,
   SESSION_DISCONNECT,
-  APPEND_SAME_LINE_CONTENT,
+  APPEND_COMMAND,
 } from './constants';
 
 export function addSession(connection) {
@@ -76,11 +77,11 @@ export function appendContent(segments, uuid) {
   };
 }
 
-export function appendSameLineContent(line, uuid) {
+export function appendCommand(segments, uuid) {
   return {
-    type: APPEND_SAME_LINE_CONTENT,
+    type: APPEND_COMMAND,
     payload: {
-      line,
+      segments,
       uuid,
     },
   };
@@ -92,6 +93,17 @@ export function appendSystemMessages(messages, uuid) {
     payload: {
       messages,
       uuid,
+    },
+  };
+}
+
+export function processCommand(command, uuid, hidden) {
+  return {
+    type: COMMAND_PRE_PROCESS,
+    payload: {
+      command,
+      uuid,
+      hidden,
     },
   };
 }

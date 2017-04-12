@@ -1,4 +1,4 @@
-import { SESSION_CLOSE, SESSION_INIT, APPEND_CONTENT, APPEND_SAME_LINE_CONTENT } from '../session/constants';
+import { SESSION_CLOSE, SESSION_INIT, APPEND_CONTENT, APPEND_COMMAND } from '../session/constants';
 
 // Initial State
 const initialState = [];
@@ -14,7 +14,23 @@ const ACTION_HANDLERS = {
   [SESSION_CLOSE]: (state, action) => [
     ...state.filter((content) => content.uuid !== action.payload.uuid),
   ],
-  [APPEND_CONTENT]: (state, action) => state.map((content) => (
+  [APPEND_CONTENT]: (state, action) => state.map((content) => {
+    if (content.uuid !== action.payload.uuid) return content;
+    let contentSegments = [...content.segments];
+    let payloadSegments = [...action.payload.segments];
+    // Command line input has odd behaviour
+    if (content.segments.length && content.segments[content.segments.length - 1].classes.includes('at-input')) {
+      contentSegments = contentSegments.slice(0, -1);
+      payloadSegments = [...payloadSegments, content.segments[content.segments.length - 1]];
+    }
+    return Object.assign({}, content, {
+      segments: [
+        ...contentSegments,
+        ...payloadSegments,
+      ],
+    });
+  }),
+  [APPEND_COMMAND]: (state, action) => state.map((content) => (
     (content.uuid !== action.payload.uuid) ? content : Object.assign({}, content, {
       segments: [
         ...content.segments,
@@ -22,13 +38,6 @@ const ACTION_HANDLERS = {
       ],
     })
   )),
-  // [APPEND_SAME_LINE_CONTENT]: (state, action) => state.map((content) => (
-  //   (content.uuid !== action.payload.uuid) ? content : Object.assign({}, content, {
-  //     segments: content.segments.map((line, index) => (
-  //       (index < (content.lines.length - 1)) ? line : `${line}${action.payload.line}`
-  //     )),
-  //   })
-  // )),
 };
 
 // Expose reducer

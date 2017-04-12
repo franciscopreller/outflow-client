@@ -34,5 +34,6 @@ export function escapeForHtml(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
-    .replace(/ /g, '\u00a0');
+    .replace(/ /g, '\u00a0')
+    .replace(/(?:\r\n|\r|\n)/g, '<br />');
 }

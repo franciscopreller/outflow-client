@@ -6,6 +6,7 @@ import authReducer from '../modules/auth/reducers';
 import sessionReducer from '../modules/session/reducers';
 import connectionReducer from '../modules/connection/reducers';
 import contentReducer from '../modules/content/reducers';
+import commandReducer from '../modules/command/reducers'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
@@ -14,6 +15,7 @@ export const makeRootReducer = (asyncReducers) => {
     sessions: sessionReducer,
     connections: connectionReducer,
     content: contentReducer,
+    command: commandReducer,
     ...asyncReducers
   });
 };
