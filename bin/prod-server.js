@@ -1,6 +1,6 @@
 // Lock in production environment
 process.env.NODE_ENV = 'production';
-process.env.PORT = 80;
+process.env.PORT = 8080;
 
 const project = require('../config/project.config');
 const server = require('../server/main');
