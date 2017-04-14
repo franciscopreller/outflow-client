@@ -9,7 +9,7 @@ import { WS_PREFIX } from '../modules/ws/constants';
 import rootSaga from './sagas';
 
 // Set the websocket options
-const hostname = window.location.hostname.indexOf('localhost') ? 'outflow.local' : window.location.hostname;
+const hostname = (window.location.hostname.indexOf('localhost') !== -1) ? 'outflow.local' : window.location.hostname;
 const webSocketOptions = {
   hostname,
   port: 80,
