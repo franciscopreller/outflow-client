@@ -10,9 +10,10 @@ import rootSaga from './sagas';
 
 // Set the websocket options
 const hostname = (window.location.hostname.indexOf('localhost') !== -1) ? 'outflow.local' : window.location.hostname;
+const port = (window.location.protocol.indexOf('https:') !== -1) ? 80 : 443;
 const webSocketOptions = {
   hostname,
-  port: 80,
+  port,
   path: '/ws',
   autoreconnect: true,
   perMessageDeflate: true,
