@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import Dashboard from '../components/Dashboard';
-import { closeSession, processCommand } from '../modules/session/actions';
+import { closeSession, processCommand, sessionConnect } from '../modules/session/actions';
 
 const mapDispatchToProps = ({
   closeSession,
   processCommand,
+  sessionConnect,
 });
 
 const mapStateToProps = (state) => ({

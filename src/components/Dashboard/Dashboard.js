@@ -8,6 +8,7 @@ export class Dashboard extends React.Component {
   static propTypes = {
     sessions: React.PropTypes.array,
     closeSession: React.PropTypes.func,
+    sessionConnect: React.PropTypes.func,
   };
 
   constructor(props, context) {
@@ -56,6 +57,8 @@ export class Dashboard extends React.Component {
                 contentSegments={session.content.segments}
                 hideCommandLine={session.hidePrompt}
                 commandHistory={session.command.history}
+                connection={session.connection}
+                reconnectSession={this.props.sessionConnect}
               />
             </Tab>
           ))}

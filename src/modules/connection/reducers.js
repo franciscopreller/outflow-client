@@ -1,5 +1,10 @@
 import { REHYDRATE } from 'redux-persist/constants';
-import { SESSION_CLOSED, SESSION_INIT, SESSION_CONNECTED } from '../session/constants';
+import {
+  SESSION_CLOSED,
+  SESSION_INIT,
+  SESSION_CONNECTED,
+  SESSION_DISCONNECTED,
+} from '../session/constants';
 
 // Initial State
 const initialState = [];
@@ -27,6 +32,12 @@ const ACTION_HANDLERS = {
   [SESSION_CONNECTED]: (state, action) => [
     ...state.map((conn) => (conn.uuid !== action.payload.uuid) ? conn : Object.assign({}, conn, {
       connected: true,
+      connecting: false,
+    })),
+  ],
+  [SESSION_DISCONNECTED]: (state, action) => [
+    ...state.map((conn) => (conn.uuid !== action.payload.uuid) ? conn : Object.assign({}, conn, {
+      connected: false,
       connecting: false,
     })),
   ],
