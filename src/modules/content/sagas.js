@@ -35,6 +35,7 @@ function* appendCommandToContent(action) {
     const { hidden } = action.payload;
     if (!hidden) {
       const command = `${action.payload.command}\n`;
+      // Change output colour to #2bb574
       const segments = [{classes: ['fg-yellow', 'at-bold', 'cmd'], text: command}];
       yield put(actions.appendCommand(segments, action.payload.uuid));
     }
@@ -46,6 +47,7 @@ function* appendCommandToContent(action) {
 function* contentSaga() {
   yield [
     takeEvery(constants.SESSION_OUTPUT, parseRawSessionOutput),
+    takeEvery(constants.SESSION_PROMPT, parseRawSessionOutput), // @TODO: Different parsing for prompts
     takeEvery(constants.SESSION_ERROR, appendErrorMsgToContent),
     takeEvery(constants.SESSION_COMMAND, appendCommandToContent),
     takeEvery(constants.APPEND_SYSTEM_MSG, appendSystemMsgToContent),

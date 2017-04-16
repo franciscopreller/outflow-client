@@ -1,6 +1,6 @@
 {
   "name": "outflow-client",
-  "version": "0.0.2-alpha",
+  "version": "0.0.1-alpha",
   "description": "Outflow Telnet Client",
   "main": "index.js",
   "engines": {
