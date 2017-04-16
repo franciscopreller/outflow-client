@@ -1,4 +1,9 @@
-import { SESSION_INIT, SESSION_CLOSE, SESSION_HIDE_PROMPT_REQUESTED, SESSION_SHOW_PROMPT_REQUESTED } from './constants';
+import {
+  SESSION_INIT,
+  SESSION_CLOSE,
+  SESSION_HIDE_PROMPT_REQUESTED,
+  SESSION_SHOW_PROMPT_REQUESTED,
+} from './constants';
 
 // Initial State
 const initialState = [];
@@ -10,6 +15,7 @@ const ACTION_HANDLERS = {
       uuid: action.payload.uuid,
       name: action.payload.connection.name,
       hidePrompt: false,
+      eor: false,
     }
   ],
   [SESSION_CLOSE]: (state, action) => [

@@ -13,7 +13,7 @@ function* parseRawSessionOutput(action) {
 function* appendSystemMsgToContent(action) {
   try {
     const messages = action.payload.messages;
-    const segments = [{ classes: ["fg-cyan"], text: `${messages.join('\n')}\n` }];
+    const segments = [{ classes: ['fg-cyan', 'cmd'], text: `%%% ${messages.join('\n')}\n` }];
     yield put(actions.appendCommand(segments, action.payload.uuid));
   } catch (err) {
     yield console.error('Could not add system messages to content', err);
@@ -23,7 +23,7 @@ function* appendSystemMsgToContent(action) {
 function* appendErrorMsgToContent(action) {
   try {
     const error = action.payload.error;
-    const segments = [{ classes: ["fg-red"], text: `${error}\n` }];
+    const segments = [{ classes: ['fg-red', 'cmd'], text: `%%% ${error}\n` }];
     yield put(actions.appendCommand(segments, action.payload.uuid));
   } catch (err) {
     yield console.error('Could not add system messages to content', err);
@@ -35,7 +35,7 @@ function* appendCommandToContent(action) {
     const { hidden } = action.payload;
     if (!hidden) {
       const command = `${action.payload.command}\n`;
-      const segments = [{classes: ['fg-yellow at-bold'], text: command}];
+      const segments = [{classes: ['fg-yellow', 'at-bold', 'cmd'], text: command}];
       yield put(actions.appendCommand(segments, action.payload.uuid));
     }
   } catch (err) {
