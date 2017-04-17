@@ -55,6 +55,7 @@ export class Dashboard extends React.Component {
                 uuid={session.uuid}
                 sendCommand={this.props.processCommand}
                 contentSegments={session.content.segments}
+                promptSegments={session.content.promptSegments}
                 hideCommandLine={session.hidePrompt}
                 commandHistory={session.command.history}
                 connection={session.connection}

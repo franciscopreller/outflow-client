@@ -21,6 +21,25 @@
   color: inherit !important;
 }
 
+.client-overlay {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  top: 0;
+  bottom: 0;
+  left: 7px;
+  right: 7px;
+  z-index: 999;
+}
+
+.client-overlay-inner {
+  position: absolute;
+  top: 30%;
+  transform: translateY(-50%) translateX(-50%);
+  left: 50%;
+  text-align: center;
+  color: #9E9E9E;
+}
+
 /*****
  * Terminal Content Styles
  ***********************************/
@@ -42,6 +61,7 @@ $green: rgb(0, 147, 0);
 $bold-green: rgb(0, 252, 0);
 $white: rgb(205, 205, 205);
 $bold-white: rgb(255, 255, 255);
+$command: #2bb574;
 
 .fg-black {
   color: $black;
@@ -96,6 +116,9 @@ $bold-white: rgb(255, 255, 255);
   &.at-bold {
     color: $bold-white;
   }
+}
+.fg-cmd {
+  color: $command;
 }
 
 // Reconnect Icon spin

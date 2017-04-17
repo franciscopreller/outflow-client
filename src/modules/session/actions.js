@@ -5,11 +5,11 @@ import {
   SESSION_CLOSE,
   SESSION_CONNECT,
   SESSION_COMMAND,
-  APPEND_CONTENT,
-  COMMAND_PRE_PROCESS,
-  APPEND_SYSTEM_MSG,
   SESSION_DISCONNECT,
-  APPEND_COMMAND,
+  COMMAND_PRE_PROCESS,
+  APPEND_CONTENT,
+  APPEND_SYSTEM_MSG,
+  APPEND_PROMPT,
 } from './constants';
 
 export function addSession(connection) {
@@ -77,9 +77,9 @@ export function appendContent(segments, uuid) {
   };
 }
 
-export function appendCommand(segments, uuid) {
+export function appendPrompt(segments, uuid) {
   return {
-    type: APPEND_COMMAND,
+    type: APPEND_PROMPT,
     payload: {
       segments,
       uuid,
